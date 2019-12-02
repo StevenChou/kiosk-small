@@ -1,0 +1,68 @@
+<script type="text/x-template" id="template-scanQRcode-main">
+  <div class="container" :style="[cultureFontStyle]">
+      <div class="col-xs-12">
+          <div class="text-title text-mid mgT10" :style="[btnSize]">{{wording.scanQRcodeTitle1}}</div>
+      </div>
+      <div class="logoImg4-2 text-title4">
+          <div v-html="infoData"></div>
+      </div>
+      <div class="text-title3 text-mid mgT15" :style="[btnSize]">{{wording.scanQRcodeTitle2 + refund + wording.scanQRcodeTitle4}}</div>
+      <table class="tableBg">
+      <tr>
+          <td>
+              <div class="mgT10 mgPassportLeft2">
+                  <div class="logoImg7">
+                      <div class="text-subTitle text-mid" :style="[subTitle]">
+                          {{wording.scanQRcodeTitle5}}
+                      </div>
+                      <!-- <div class="text-subTitle2-2 text-mid">
+                          {{wording.scanQRcodeTitle8}}</div> -->
+                      <div v-html="wording.scanQRcodeTitle8" class="text-subTitle2-2 text-mid">
+                      </div>
+                      <div class="text-title text-mid mgT15">
+                          {{number}}</div>
+                      </div>
+                  </div>
+              </td>
+              <td>
+                  <div class="mgT10 ">
+                      <div class="logoImg7-2">
+                          <div id="app" class="text-subTitle text-mid" :style="[subTitle]" >
+                              {{wording.scanQRcodeTitle6}}</div>
+                          <div class="text-subTitle2-2 text-mid">
+                              {{wording.scanQRcodeTitle9}}</div>
+                          <div class="text-title text-mid mgT15">
+                              {{amount}}</div>
+                      </div>
+                  </div>
+              </td>
+              <td>
+                  <div class="mgT10 ">
+                      <div class="logoImg7">
+                          <div id="app" class="text-subTitle text-mid" :style="[subTitle]">
+                              {{wording.scanQRcodeTitle7}}</div>
+                          <div class="text-subTitle2-2 text-mid">
+                              {{wording.scanQRcodeTitle10}}</div>
+                          <div class="text-title text-mid mgT15">
+                              {{taxRefund}}</div>
+                      </div>
+                  </div>
+              </td>
+          </tr>
+      </table>
+
+          <tr>
+              <td>
+                  <div @click.stop.prevent="" @mousedown="handleMouseDown(wording.toDetail)" class="logoImg8">
+                      <b v-bind:style="{color:item.color}" class="text-subTitle2-2" > {{wording.scanQRcodeTitle14}} </b>
+                  </div>
+              </td>
+              <td>
+                  <div @click.stop.prevent="" @mousedown="handleMouseDown(wording.toSign)" class="logoImg9">
+                      <b v-bind:style="{color:item.color}" class="text-subTitle2" > {{wording.scanQRcodeTitle15}} </b>
+                  </div>
+              </td>
+          </tr>
+
+  </div>
+</script>

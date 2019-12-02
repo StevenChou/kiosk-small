@@ -1,0 +1,109 @@
+<script type="text/x-template" id="template-admin-main">
+    <div class="container" style="margin-top:10px;">
+    <div class="row">
+  	  <button type="button" class="btn btn-md btn-warning pull-left" @mousedown="btnAct('SHUT_DOWN')">關機</button>
+  <button type="button" class="btn btn-md btn-warning pull-left" style="margin-left: 10px;" @mousedown="btnAct('REBOOT')">重開機</button>
+  <button type="button" class="btn btn-md btn-warning pull-left" style="margin-left: 10px;" @mousedown="btnAct('CLOSE_APP')">關閉應用程式</button>
+  	  <button type="button" class="btn btn-md btn-danger pull-right" style="font-weight:bold; margin-bottom:10px; margin-right:20px;" @mousedown="goHome">回首頁</button>
+  </div>
+
+     <div class="panel-group">
+       <div class="panel panel-info">
+          <h3 class="panel-heading">Scanner</h3>
+          <div class="panel-body">
+              <button class="btn btn-md btn-default" style="margin-right: 30px; font-weight:bold; border:3px #808080 solid;" @mousedown="btnAct('SCAN_START')">掃描開始</button>
+              <button class="btn btn-md btn-default" style="margin-right: 30px; font-weight:bold; border:3px #808080 solid;" @mousedown="btnAct('SCAN_STOP')">掃描停止</button>
+          </div>
+       </div>
+
+       <div class="panel panel-info" style="margin-top: 10px;">
+          <h3 class="panel-heading">Webcam</h3>
+          <div class="panel-body">
+             <button class="btn btn-md btn-default" style="margin-right: 30px; font-weight:bold; border:3px #808080 solid;" @mousedown="btnAct('WEBCAM_CAPTURE')">WebCam 啟動</button>
+   	 		<button class="btn btn-md btn-default" style="margin-right: 30px; font-weight:bold; border:3px #808080 solid;" @mousedown="btnAct('WEBCAM_CLOSE')">WebCam 停止</button>
+   	 		<!-- <button class="btn btn-md btn-default" style="margin-right: 30px; font-weight:bold; border:3px #808080 solid;" @mousedown="btnAct('WEBCAM_SETTING')">設定</button> -->
+          </div>
+       </div>
+
+       <div class="panel panel-info" style="margin-top: 10px;">
+          <h3 class="panel-heading">Printer</h3>
+          <div class="panel-body">
+             <button class="btn btn-md btn-default" style="margin-right: 30px; font-weight:bold; border:3px #808080 solid;" @mousedown="btnAct('PRINT_START')">列印測試</button>
+   	        <button class="btn btn-md btn-default" style="margin-right: 30px; font-weight:bold; border:3px #808080 solid;" @mousedown="btnAct('PRINT_STATUS')">狀態檢測</button>
+          </div>
+       </div>
+
+       <div class="panel panel-info" style="margin-top: 10px;">
+          <h3 class="panel-heading">Passport Scanner</h3>
+          <div class="panel-body">
+             <button class="btn btn-md btn-default" style="margin-right: 30px; font-weight:bold; border:3px #808080 solid;" @mousedown="btnAct('PASSPORT_START')">掃描開始</button>
+             <button class="btn btn-md btn-default" style="margin-right: 30px; font-weight:bold; border:3px #808080 solid;" @mousedown="btnAct('PASSPORT_END')">掃描停止</button>
+          </div>
+       </div>
+
+       <div class="panel panel-info" style="margin-top: 10px;">
+          <h3 class="panel-heading">API Testing</h3>
+          <div class="panel-body">
+              <button class="btn btn-md btn-default" style="margin-right: 30px; font-weight:bold; border:3px #808080 solid;" @mousedown="btnAct('101_API')">101 API</button>
+              <button class="btn btn-md btn-default" style="margin-right: 30px; font-weight:bold; border:3px #808080 solid;" @mousedown="btnAct('AUTH_API')">大平台-移民署(驗證)</button>
+         <button class="btn btn-md btn-default" style="margin-right: 30px; font-weight:bold; border:3px #808080 solid;" @mousedown="btnAct('APPLY_API')">大平台-開立</button>
+   </div>
+       </div>
+
+     <!-- <div class="panel panel-danger" style="margin-top: 30px;">
+       <div class="panel-heading">Panel with panel-danger class</div>
+       <div class="panel-body">Panel Content</div>
+     </div> -->
+     </div>
+   		<!-- <div>
+   			<p style="margin-top:20px;height:60px;font-size:25px;width:170px;">SYSTEM</p>
+   			<button class="btn btn-md btn-danger" style="font-weight:bold;" @mousedown="handleMouseDown('Cancel')">取消</button>
+   			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   			<button class="button button-caution btn-primary" style="width:170px;height:60px;font-size:25px" @mousedown="handleMouseDown('ShotDownApp')">關閉程式</button>
+   			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   			<button class="button button-caution btn-primary" style="width:170px;height:60px;font-size:25px" @mousedown="handleMouseDown('ShudDown')">關機</button>
+   			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   			<button class="button button-caution btn-primary" style="width:170px;height:60px;font-size:25px" @mousedown="handleMouseDown('Reboot')">重開機</button>
+   			<br>
+   			<p style="margin-top:20px;height:60px;font-size:25px;width:170px;">ControlBox</p>
+   			<button class="button button-caution btn-danger" style="background:#444444;border-color: #444444;width:170px;height:60px;font-size:25px" @mousedown="kiosk.API.Device.ControlBox.Connect(function (res) { alert(JSON.stringify(res)); }, function (res) { alert(JSON.stringify(res));})">主板開</button>
+   			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   			<button class="button button-caution btn-danger" style="background:#444444;border-color: #444444;width:170px;height:60px;font-size:25px" @mousedown="kiosk.API.Device.ControlBox.DisConnect(function (res) {alert(JSON.stringify(res)); }, function (res) {alert(JSON.stringify(res)); })">主板關</button>
+   			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   			<button class="button button-caution btn-danger" style="background:#444444;border-color: #444444;width:170px;height:60px;font-size:25px" @mousedown="ledOpen()">LED開</button>
+   			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   			<button class="button button-caution btn-danger" style="background:#444444;border-color: #444444;width:170px;height:60px;font-size:25px" @mousedown="ledClose()">LED關</button>
+   			<br>
+   			<p style="margin-top:20px;height:60px;font-size:25px;width:170px;">健保卡機</p>
+   			<button class="button button-caution btn-danger" style="width:170px;height:60px;font-size:25px" @mousedown="handleMouseDown('EZM_getData')">測試卡機</button>
+   			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   			<button class="button button-caution btn-danger" style="width:170px;height:60px;font-size:25px" @mousedown="handleMouseDown('EZM_StopGet')">停止卡機</button>
+   			<br>
+   			<p style="margin-top:20px;height:60px;font-size:25px;width:170px;">SCANNER</p>
+   			<button class="button button-caution btn-success" style="width:170px;height:60px;font-size:25px" @mousedown="handleMouseDown('ScannerStar')">掃描開始</button>
+   			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   			<button class="button button-caution btn-success" style="width:170px;height:60px;font-size:25px" @mousedown="handleMouseDown('ScannerStop')">掃描停止</button>
+   			<br>
+   			<p style="margin-top:20px;height:60px;font-size:25px;width:170px;">APKB</p>
+   			<button class="button button-caution btn-warning" style="width:170px;height:60px;font-size:25px" @mousedown="handleMouseDown('APKB_Open')">開啟APKB</button>
+   			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   			<button class="button button-caution btn-warning" style="width:170px;height:60px;font-size:25px" @mousedown="handleMouseDown('APKB_Close')">關閉APKB</button>
+   			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   			<button class="button button-caution btn-warning" style="width:170px;height:60px;font-size:25px" @mousedown="handleMouseDown('APKB_Show')">顯示APKB</button>
+   			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   			<button class="button button-caution btn-warning" style="width:170px;height:60px;font-size:25px" @mousedown="handleMouseDown('APKB_Hide')">隱藏APKB</button>
+   			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   			<button class="button button-caution btn-warning" style="width:200px;height:60px;font-size:25px" @mousedown="handleMouseDown('APKB_Check')">檢查鍵盤狀態</button>
+   			<br>
+   			<p style="margin-top:20px;height:60px;font-size:25px;width:170px;">人體感測器</p>
+   			<button class="button button-caution btn-info" style="width:170px;height:60px;font-size:25px" @mousedown="handleMouseDown('HSENSOR_OPEN')">開啟感測器</button>
+   			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   			<button class="button button-caution btn-info" style="width:170px;height:60px;font-size:25px" @mousedown="handleMouseDown('HSENSOR_CLOSE')">關閉感測器</button>
+   			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   			<button class="button button-caution btn-info" style="width:170px;height:60px;font-size:25px" @mousedown="handleMouseDown('HSENSOR_START')">啟動感測器</button>
+   			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   			<button class="button button-caution btn-info" style="width:170px;height:60px;font-size:25px" @mousedown="handleMouseDown('HSENSOR_STOP')">停止感測器</button>
+   		</div>
+   	</div> -->
+   </div>
+</script>

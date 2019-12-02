@@ -1,0 +1,1017 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title></title>
+	<meta charset="utf-8" />
+</head>
+
+<body>
+	<table border="1">
+		<tr>
+			<td>
+				<input id="btnConnect" type="button" value="主板 Connect" onclick="kiosk.API.Device.ControlBox.Connect(function (res) { }, function () { })" />
+				<input id="btnConnect" type="button" value="主板 DisConnect" onclick="kiosk.API.Device.ControlBox.DisConnect(function (res) { }, function () { })" />
+				<input id="btnConnect" type="button" value="健保卡燈(開)" onclick="kiosk.API.Device.ControlBox.SetLED(2, 1, function () { }, function () { }) " />
+				<input id="btnConnect" type="button" value="健保卡燈(開)" onclick="kiosk.API.Device.ControlBox.SetLED(2, 0, function () { }, function () { }) " />
+			</td>
+			<td>
+				<input id="btnConnect" type="button" value="印表機 OPEN" onclick="Print()" />
+				<input id="btnConnect" type="button" value="印表機 CLOSE" onclick="Print()" />
+				<input id="btnConnect" type="button" value="列印收據" onclick="Print()" />
+				<input id="btnConnect" type="button" value="列印圖檔" onclick="printImg()" />
+				<input id="btnConnect" type="button" value="列印電子發票" onclick="ElecPrint()" />
+				<input id="btnConnect" type="button" value="只列印電子發票" onclick="OnlyInvoice()" />
+				<input id="btnConnect" type="button" value="只列印收據" onclick="OnlyReceipt()" />
+				<input id="btnConnect" type="button" value="取得印表機狀態" onclick="GetPrintStatus()" />
+			</td>
+			<td>
+				<input id="btnCloseAP" type="button" value="關閉應用程式" onclick="ShutDownAPP()" />
+			</td>
+			<td>
+				<input type="button" value="System Reset" />
+			</td>
+			<td>
+				<input type="button" value="Clear" />
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				<input id="btnScannerOpen" type="button" value="Scanner Open" onclick="ScannerOpen()" />
+				<input id="btnScannerOpen" type="button" value="Scanner Start" onclick="StartScanner()" />
+
+				<input id="btnScannerStop" type="button" value="Scanner Stop" onclick="StopScanner()" />
+				<input id="btnScannerReset" type="button" value="Scanner Reset" onclick="ScannerReset()" />
+				<input id="btnScannerGetStatus" type="button" value="Scanner GetStatus" onclick="ScannerGetStatus()" />
+			</td>
+			<td>
+				<table>
+					<tr>
+						<td>RFID 設備</td>
+					</tr>
+					<tr>
+						<td>
+							<input type="button" value="OPEN" onclick="RFID_OPEN()" />
+							<input type="button" value="CLOSE" onclick="RFID_CLOSE()" />
+							<input type="button" value="VERSION" onclick="RFID_VERSION()" />
+							<input type="button" value="START" onclick="RFID_START()" />
+							<input type="button" value="STOP" onclick="RFID_STOP()" />
+							<input type="button" value="SETANTENNA" onclick="RFID_SETANTENNA()" />
+							<input type="button" value="GETANTENNA" onclick="RFID_GETANTENNA()" />
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+
+
+		<tr>
+			<td>
+				<input id="ECCInit" type="button" value="悠遊卡初始" onclick="ECCInit()" />
+				<input id="ECCRead" type="button" value="悠遊卡讀卡" onclick="ECCReadCard()" />
+				<input id="ECCDeduct" type="button" value="悠遊卡扣款" onclick="ECCPayment()" />
+				<input id="ECCStatus" type="button" value="悠遊卡卡機狀態" onclick="ECCStatus()" />
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				<input id="O2OQRCODE" type="button" value="支付寶正向" onclick="O2OQRCODE()" />
+				<input id="O2OQUERY" type="button" value="支付寶查詢" onclick="O2OQUERY()" />
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				<input id="CTBCPayment" type="button" value="中信扣款" onclick="CTBCPayment()" />
+				<input id="CTBCRefund" type="button" value="中信退款" onclick="CTBCRefund()" />
+				<input id="CTBCSettle" type="button" value="中信結帳" onclick="CTBCSettle()" />
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				<table>
+					<tr>
+						<td>=== 護照機 ===</td>
+					</tr>
+					<tr>
+						<td>
+							<input id="PASSPORT_OPEN" type="button" value="護照機 OPNE" onclick="PASSPORT_OPEN()" />
+							<input id="PASSPORT_CLOSE" type="button" value="護照機 CLOSE" onclick="PASSPORT_CLOSE()" />
+							<input id="PASSPORT_GET" type="button" value="護照機 GET Data" onclick="PASSPORT_GET()" />
+							<input id="PASSPORT_STOP" type="button" value="護照機 STOP GET" onclick="PASSPORT_STOP()" />
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				<table>
+					<tr>
+						<td>=== 現金模組 ===</td>
+					</tr>
+					<tr>
+						<td>
+							<input id="ICT_OPEN" type="button" value="ICT OPEN" onclick="ICT_OPEN()" />
+							<input id="ICT_CLOSE" type="button" value="ICT CLOSE" onclick="ICT_CLOSE()" />
+							<input id="paymentStatus" type="button" value="paymentStatus" onclick="PAYMENT_STATUS()" />
+							<input id="begPayment" type="button" value="BegPayment" onclick="BEG_PAYMENT()" />
+							<input id="endPayment" type="button" value="EndPayment" onclick="END_PAYMENT()" />
+							<input id="cancelPayment" type="button" value="cancelPayment" onclick="CANCEL_PAYMENT()" />
+							<input id="setNdNumber" type="button" value="setNdNumber" onclick="SETND_NUMBER()" />
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				<table>
+					<tr>
+						<td>=== Control Box ===</td>
+					</tr>
+					<tr>
+						<td>
+							<input id="CB_OPEN" type="button" value="CB_OPEN" onclick="Connect()" />
+							<input id="CB_CLOSE" type="button" value="CB_CLOSE" onclick="DisConnect()" />
+							<input id="CB_LED" type="button" value="CB_LED" onclick="CB_LEDEvent()" />
+							<input id="CB_USB" type="button" value="CB_USB" onclick="CB_USBEvent()" />
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				<table>
+					<tr>
+						<td>=== EZ710 BU ===</td>
+					</tr>
+					<tr>
+						<td>
+							<input id="BU_INIT" type="button" value="讀卡機初始" onclick="EZ710_INIT()" />
+							<input id="BU_READCARD" type="button" value="讀取卡號" onclick="EZ710_READ_CARD()" />
+							<input id="BU_READCONTENT" type="button" value="讀取內容" onclick="EZ710_READ_CONTENT()" />
+							<input id="BU_WRITECONTENT" type="button" value="讀取寫卡" onclick="EZ710_WRITE_CONTENT()" />
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				<table>
+					<tr>
+						<td>人體感測器</td>
+					</tr>
+					<tr>
+						<td>
+							<input id="HSENSOR_OPEN" type="button" value="SENSOR OPEN" onclick="HSENSOR_OPEN()" />
+							<input id="HSENSOR_CLOSE" type="button" value="SENSOR CLOSE" onclick="HSENSOR_CLOSE()" />
+							<input id="HSENSOR_START" type="button" value="SENSOR START" onclick="HSENSOR_START()" />
+							<input id="HSENSOR_STOP" type="button" value="SENSOR STOP" onclick="HSENSOR_STOP()" />
+							<input id="HSENSOR_STATUS" type="button" value="SENSOR STATUS" onclick="HSENSOR_STATUS()" />
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				<table>
+					<tr>
+						<td>HoneyWell Scanner</td>
+					</tr>
+					<tr>
+						<td>
+							<input id="HoneyWell_OPEN" type="button" value="SCANNER OPEN" onclick="HSCANNER_OPEN()" />
+							<input id="HoneyWell_CLOSE" type="button" value="SCANNER CLOSE" onclick="HSCANNER_CLOSE()" />
+							<input id="HoneyWell_START" type="button" value="SCANNER SCAN" onclick="HSCANNER_SCAN()" />
+							<input id="HoneyWell_CANCEL" type="button" value="SCANNER CANCEL" onclick="HSCANNER_CANCEL()" />
+							<input id="HoneyWell_OPENSTATUS" type="button" value="SCANNER OPEN STATUS" onclick="HSCANNER_OPENSTATUS()" />
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+
+
+		<tr>
+			<td>
+				<table>
+					<tr>
+						<td>交流發卡機</td>
+					</tr>
+					<tr>
+						<td>
+							<input id="EWTKLIB_OPEN" type="button" value="EWTKLIB Open" onclick="EWTKLIB_Open()" />
+							<input id="EWTKLIB_CLOSE" type="button" value="EWTKLIB Close" onclick="EWTKLIB_Close()" />
+							<input id="EWTKLIB_ClearError" type="button" value="EWTKLIB ClearError" onclick="EWTKLIB_ClearError()" />
+							<input id="EWTKLIB_RequestStatus" type="button" value="EWTKLIB RequestStatus" onclick="EWTKLIB_RequestStatus()" />
+						</td>
+					</tr>
+
+					<tr>
+						<td>
+							<input id="EWTKLIB_IssueCard" type="button" value="EWTKLIB IssueCard" onclick="EWTKLIB_IssueCard()" />
+							<input id="EWTKLIB_MoveCard" type="button" value="EWTKLIB MoveCard" onclick="EWTKLIB_MoveCard()" />
+							<input id="EWTKLIB_RomVersion" type="button" value="EWTKLIB RomVersion" onclick="EWTKLIB_RomVersion()" />
+							<input id="EWTKLIB_CleanCard" type="button" value="EWTKLIB CleanCard" onclick="EWTKLIB_CleanCard()" />
+						</td>
+					</tr>
+
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table>
+					<tr>
+						<td>=== 健保卡機EZM ===</td>
+					</tr>
+					<tr>
+						<td>
+							<input id="EZM_GetData" type="button" value="EZM_GetData" onclick="EZM_GetData()" />
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table>
+					<tr>
+						<td>=== 德安餐券列印 ===</td>
+					</tr>
+					<tr>
+						<td>
+							<input id="athena" type="button" value="athena_printCash" onclick="athena_printCash()" />
+							<input id="athena" type="button" value="列印餐券" onclick="BreakfastVoucher()" />
+							<input id="athena" type="button" value="列印餐券明細" onclick="BreakfastVouchersDetail()" />
+							<input id="athena" type="button" value="不含餐住宿" onclick="CheckInVoucher()" />
+							<input id="athena" type="button" value="OrderSample" onclick="OrderSample()" />
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</body>
+
+<script src="scripts/jsFramework/jquery-1.11.3.min.js"></script>
+<script src="scripts/moment.js"></script>
+<script src="scripts/viewModels.js "></script>
+<script src="scripts/jsFramework/vue.js "></script>
+<script src="scripts/KioskClient.js"></script>
+<script src="scripts/Device.js"></script>
+<script src="scripts/settings/systemSetting.js "></script>
+<script src="scripts/settings/templateSetting.js "></script>
+<!--<script src="scripts/jsFramework/mainApp.js "></script>-->
+
+<script>
+	var testFlag = {
+		isHTMLVerision: false,
+		customLibOffline: false,
+		isOffLine: false,
+		offDevice: false,
+		viewDebugger: false,
+		offScanner: false
+	}
+</script>
+
+<script>
+	// === RFID ===
+	// === RFID ===
+	function RFID_OPEN() {
+		kiosk.API.Device.RFID.RfidOpen(function (res) {
+			alert(JSON.stringify(res));
+		}, 'COM25');
+	}
+
+	function RFID_CLOSE() {
+		kiosk.API.Device.RFID.RfidClose(function (res) {
+			alert(JSON.stringify(res));
+		});
+	}
+
+	function RFID_VERSION() {
+		kiosk.API.Device.RFID.RfidGetVersion(function (res) {
+			alert(JSON.stringify(res));
+		});
+	}
+
+	function RFID_START() {
+		kiosk.API.Device.RFID.RfidStart(function (res) {
+			alert(JSON.stringify(res));
+		});
+	}
+
+	function RFID_STOP() {
+		kiosk.API.Device.RFID.RfidStop(function (res) {
+			alert(JSON.stringify(res));
+		});
+	}
+
+	function RFID_SETANTENNA() {
+		kiosk.API.Device.RFID.RfidSetAntenna(function (res) {
+			alert(JSON.stringify(res));
+		}, 'COM25', '1');
+	}
+
+	function RFID_GETANTENNA() {
+		kiosk.API.Device.RFID.RfidGetAntenna(function (res) {
+			alert(JSON.stringify(res));
+		});
+	}
+	// === 德安餐券 ===
+	function athena_printCash() {
+		var inputData = JSON.parse(res);
+		if (inputData.isSuccess) {
+			kiosk.API.log.logInfo("M05M06M15成功：" + res);
+			var PrintDataList = inputData.result;
+			for (var i = 0, imax = PrintDataList.length; i < imax; i++) {
+				//進行列印
+				var result = kiosk.API.Device.Thermal.PrintTemplatePage('TM-T70IIMU', PrintDataList[i].TemplateID, PrintDataList[i]
+					.PrintData);
+			}
+		}
+	}
+
+	function BreakfastVoucher() {
+		var res =
+			'{"isSuccess":true,"message":null,"result":[{"TemplateID":"BreakfastVoucher","PrintData":{"HotelName":"德安花園酒店","HotelNameEng":"AthenaGarden Hotel","CustomerName":"","RoomNo":"508","Count":"2"}},{"TemplateID":"BreakfastVouchersDetail","PrintData":{"HotelName":"德安花園酒店","HotelNameEng":"Athena GardenHotel","UseDate":"2018/10/31 上午 12:00:00","RoomNo":"508"}},{"TemplateID":"BreakfastVouchersDetail","PrintData":{"HotelName":"德安花園酒店","HotelNameEng":"Athena GardenHotel","UseDate":"2018/10/31 上午 12:00:00","RoomNo":"508 "}}],"error_cod":{"ret_cod":"0000","ret_msg":""}}'
+		var inputData = JSON.parse(res);
+		if (inputData.isSuccess) {
+			kiosk.API.log.logInfo("M05M06M15成功：" + res);
+			var PrintDataList = inputData.result;
+			for (var i = 0, imax = PrintDataList.length; i < imax; i++) {
+				//進行列印
+				var result = kiosk.API.Device.Thermal.PrintTemplatePage('TM-T70IIMU', PrintDataList[i].TemplateID, PrintDataList[i]
+					.PrintData);
+			}
+		}
+	}
+
+	function BreakfastVouchersDetail() {
+		var inputData = JSON.parse(res);
+		if (inputData.isSuccess) {
+			kiosk.API.log.logInfo("M05M06M15成功：" + res);
+			var PrintDataList = inputData.result;
+			for (var i = 0, imax = PrintDataList.length; i < imax; i++) { //進行列印 
+				var result = kiosk.API.Device.Thermal.PrintTemplatePage('TM-T70IIMU',
+					PrintDataList[i].TemplateID, PrintDataList[i].PrintData);
+			}
+		}
+	}
+
+	function CheckInVoucher() {
+		var res =
+			'{"isSuccess":true,"message":null,"result":[{"TemplateID":"CheckInVoucher","PrintData":{"HotelName":"德安花園酒店","HotelNameEng":"Athena Garden Hotel","CustomerName":"","RoomNo":"202   ","Count":"0"}}],"error_cod":{"ret_cod":"0000","ret_msg":""}}'
+		var inputData = JSON.parse(res);
+		if (inputData.isSuccess) {
+			kiosk.API.log.logInfo("M05M06M15成功：" + res);
+			var PrintDataList = inputData.result;
+			for (var i = 0, imax = PrintDataList.length; i < imax; i++) { //進行列印 
+				var result = kiosk.API.Device.Thermal.PrintTemplatePage('TM-T70IIMU',
+					PrintDataList[i].TemplateID, PrintDataList[i].PrintData);
+			}
+		}
+	}
+
+	function OrderSample() {
+		var inputData = JSON.parse(res);
+		if (inputData.isSuccess) {
+			kiosk.API.log.logInfo("M05M06M15成功：" + res);
+			var PrintDataList = inputData.result;
+			for (var i = 0, imax = PrintDataList.length; i < imax; i++) { //進行列印 
+				var result = kiosk.API.Device.Thermal.PrintTemplatePage('TM-T70IIMU',
+					PrintDataList[i].TemplateID, PrintDataList[i].PrintData);
+			}
+		}
+	}
+	// === 健保卡機 ===
+	function EZM_GetData() {
+		kiosk.API.Device.EZM.getData(function (res) {
+			alert(JSON.stringify(res))
+		})
+	}
+	// === EWTK 交流發卡機 ===
+	function EWTKLIB_Open() {
+		kiosk.API.Device.EWTKLIB.Open(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {}, '3', '9600');
+	}
+
+	function EWTKLIB_Close() {
+		kiosk.API.Device.EWTKLIB.Close(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {});
+	}
+
+	function EWTKLIB_ClearError() {
+		kiosk.API.Device.EWTKLIB.ClearError(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {});
+	}
+
+	function EWTKLIB_RequestStatus() {
+		kiosk.API.Device.EWTKLIB.RequestStatus(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {});
+	}
+
+	function EWTKLIB_IssueCard() {
+		kiosk.API.Device.EWTKLIB.IssueCard(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {}, '2');
+	}
+
+	function EWTKLIB_MoveCard() {
+		kiosk.API.Device.EWTKLIB.MoveCard(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {}, '4');
+	}
+
+	function EWTKLIB_RomVersion() {
+		kiosk.API.Device.EWTKLIB.RomVersion(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {});
+	}
+
+	function EWTKLIB_CleanCard() {
+		kiosk.API.Device.EWTKLIB.CleanCard(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {});
+	}
+
+
+	// === HoneyWell Scanner ===
+	function HSCANNER_OPEN() {
+		kiosk.API.Device.HONEYWELLSCANNER.Open(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {}, '5');
+	}
+
+	function HSCANNER_CLOSE() {
+		kiosk.API.Device.HONEYWELLSCANNER.Close(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {});
+	}
+
+	function HSCANNER_SCAN() {
+		kiosk.API.Device.HONEYWELLSCANNER.Scan(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {}, '5', '10000');
+	}
+
+	function HSCANNER_CANCEL() {
+		kiosk.API.Device.HONEYWELLSCANNER.Cancel(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {});
+	}
+
+	function HSCANNER_OPENSTATUS() {
+		kiosk.API.Device.HONEYWELLSCANNER.OpenStatus(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {});
+	}
+
+	// === H Sensor ===
+	function HSENSOR_OPEN() {
+		kiosk.API.Device.HSENSOR.Connect(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {}, 'COM5', '9600');
+	}
+
+	function HSENSOR_CLOSE() {
+		kiosk.API.Device.HSENSOR.DisConnect(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {});
+	}
+
+	function HSENSOR_START() {
+		kiosk.API.Device.HSENSOR.GetData(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {});
+	}
+
+	function HSENSOR_STOP() {
+		kiosk.API.Device.HSENSOR.StopGet(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {});
+	}
+
+	function HSENSOR_STATUS() {
+		kiosk.API.Device.HSENSOR.DeviceStatus(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {});
+	}
+
+
+	// === EPSON T70II ===
+	function ET70II_OPEN() {
+		kiosk.API.Device.EPRINTER.PrinterOpen(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {});
+	}
+
+	function ET70II_EPAPER() {
+		kiosk.API.Device.EPRINTER.PaperPrint(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {}, 'TM-T70IIMU');
+	}
+
+	function ET70II_CLOSE() {
+		kiosk.API.Device.EPRINTER.PrinterClose(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {});
+	}
+
+	// === EZ710 BU ===
+	function EZ710_INIT() {
+		kiosk.API.Device.EZ710BU.Initialize(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {});
+	}
+
+	function EZ710_READ_CARD() {
+		kiosk.API.Device.EZ710BU.GetMifreData(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {});
+	}
+
+	function EZ710_READ_CONTENT() {
+		kiosk.API.Device.EZ710BU.GetHotelCardData(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {}, 'B', 'DDAF52608054', '2');
+	}
+
+	function EZ710_WRITE_CONTENT() {
+		var newArr = "{\"sectorObjAry\":[{ " +
+			"\"b0\": \"\"," +
+			"\"b1\": \"002009201530180919080500FFFF28A9\"," +
+			"\"b2\": \"\"," +
+			"\"sectorId\": \"0\"" +
+			"}," +
+			"{" +
+			"\"b0\": \"00001000000000000000000000000000\"," +
+			"\"b1\": \"00000000000000000000000000000000\"," +
+			"\"b2\": \"00000000000000000000000000000000\"," +
+			"\"sectorId\": \"1\"" +
+			"}," +
+			"{" +
+			"\"b0\": \"00001000000000000000000000000000\"," +
+			"\"b1\": \"00000000000000000000000000000000\"," +
+			"\"b2\": \"00000000000000000000000000000000\"," +
+			"\"sectorId\": \"2\"" +
+			"}," +
+			"{" +
+			"\"b0\": \"00001000000000000000000000000000\"," +
+			"\"b1\": \"00000000000000000000000000000000\"," +
+			"\"b2\": \"00000000000000000000000000000000\"," +
+			"\"sectorId\": \"3\"" +
+			"}," +
+			"{" +
+			"\"b0\": \"00001000000000000000000000000000\"," +
+			"\"b1\": \"00000000000000000000000000000000\"," +
+			"\"b2\": \"00000000000000000000000000000000\"," +
+			"\"sectorId\": \"4\"" +
+			"}]}";
+		kiosk.API.Device.EZ710BU.SetHotelCardData(function (res) {
+				alert(JSON.stringify(res));
+			}, function () {}, 'B', 'DDAF52608054', '2', 'FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF', '00000000000000000000000000000000',
+			'FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF', newArr);
+	}
+	// === ControlBox START === 
+	function Connect() {
+		kiosk.API.Device.EZ710BU.Connect(
+			function (res) {
+				alert(JSON.stringify(res));
+			},
+			function (msg) {
+				alert(msg);
+			}
+		);
+	}
+
+	function DisConnect() {
+		kiosk.API.Device.ControlBox.DisConnect(
+			function (res) {
+				alert(JSON.stringify(res));
+			},
+			function (msg) {
+				alert(msg);
+			}
+		);
+	}
+
+	function CB_LEDEvent() {
+		kiosk.API.Device.ContorlBox.SetLED(
+			$('[name="USBAction"]').val(),
+			$('[name="LEDAction"]').val(),
+			function (res) {
+				alert(JSON.stringify(res));
+			},
+			function (msg) {
+				alert(msg);
+			}
+		);
+	};
+
+	function CB_USBEvent() {
+		kiosk.API.Device.ContorlBox.SetUSB($('[name="USBAction"]').val(), $('[name="USBKioskOption"]').val(),
+			function (res) {
+				alert(JSON.stringify(res));
+			},
+			function (msg) {
+				alert(msg);
+			});
+	};
+
+	// === ControlBox E N D === 
+
+	// === ICT START === 
+	function ICT_OPEN() {
+		kiosk.API.Device.CashBox.openDevice(function (res) {
+			alert(JSON.stringify(res));
+		}, 'COM4');
+	}
+
+	function ICT_CLOSE() {
+		kiosk.API.Device.CashBox.closeDevice(function (res) {
+			alert(JSON.stringify(res));
+		});
+	}
+
+	function PAYMENT_STATUS() {
+		kiosk.API.Device.CashBox.paymentStatus(function (res) {
+			alert(JSON.stringify(res));
+		});
+	}
+
+	function BEG_PAYMENT() {
+		kiosk.API.Device.CashBox.begPayment(function (res) {
+			alert(JSON.stringify(res));
+		}, '30');
+	}
+
+	function END_PAYMENT() {
+		kiosk.API.Device.CashBox.endPayment(function (res) {
+			alert(JSON.stringify(res));
+		});
+	}
+
+	function CANCEL_PAYMENT() {
+		kiosk.API.Device.CashBox.cancelPayment(function (res) {
+			alert(JSON.stringify(res));
+		});
+	}
+
+	function SETND_NUMBER() {
+		kiosk.API.Device.CashBox.setNdNumber(function (res) {
+			alert(JSON.stringify(res));
+		}, '100', '0');
+	}
+	// === ICT E N D === 
+
+
+	//debugger;
+	function Print() {
+
+		var data = {
+			CinemaName: '亞尼克'
+		}
+		//列印收據
+
+		var result = kiosk.API.Device.Thermal.PrintTemplatePage('TM-T70IIMU', 'HotelProject', data);
+		alert(JSON.stringify(result));
+	}
+
+	// var spcInvoiceString = {
+	// 		"Logo": "C:\\ITKiosk\\html\\img\\banner.bmp",
+	// 		"SellCompanyName": "德安大酒店",
+	// 		"InvoicePeriod": "107年05-06月",
+	// 		"InvoiceNo": "TH-23010167",
+	// 		"InvoiceTime": "2018/06/06 09:18:22",
+	// 		"Formate": "25",
+	// 		"RandomCode": "2781",
+	// 		"InvoiceAmount": "4400",
+	// 		"SellCode": "53872861",
+	// 	"BuyerCode": "11122233",
+	// 		"BarCode": "AB112233",
+	// 		"QRCode1": "SX283792471020329388700000000000000190000000080357311maUkKpNeBuq+D/+Hc97htg==",
+	// 		"QRCode2": "SX283792471020329388700000000000000190000000080357311maUkKpNeBuq+D/+Hc97htg==",
+	// 		"CreditCardL4": "2223",
+	// 		"TotalAmount": "4400",
+	// 		"NetInvoiceAmount": "4190",
+	// 		"InvoiceTax": "210",
+	// 		"InvoiceYesTaxAmount": "4400",
+	// 		"Remark1": "沖客房訂金 4400",
+	// 		"Remark2": "201806xxxxx",
+	// 		"Remark3": "結帳者 德安資訊",
+	// 		"Remark4": "",
+	// 		"SellCompanyAddress": "",
+	// 		"Store": "",
+	// 		"Machine": "",
+	// 		"Seq": "",
+	// 		"ItemList": [{
+	// 				"ItemName": "1A",
+	// 				"ItemUnitPrice": "1B",
+	// 				"ItemQty": "1C",
+	// 				"ItemSubTotal": "1D",
+	// 				"ItemTax": "1E"
+	// 			},
+	// 			{
+	// 				"ItemName": "2A",
+	// 				"ItemUnitPrice": "2B",
+	// 				"ItemQty": "2C",
+	// 				"ItemSubTotal": "2D",
+	// 				"ItemTax": "2E"
+	// 			},
+	// 			{
+	// 				"ItemName": "3A",
+	// 				"ItemUnitPrice": "3B",
+	// 				"ItemQty": "3C",
+	// 				"ItemSubTotal": "3D",
+	// 				"ItemTax": "3E"
+	// 			}
+	// 		]
+	// };
+	var x =
+		"{\"isSuccess\":true,\"message\":null,\"result\":{\"athena_id\":\"0\",\"hotel_cod\":\"01\",\"key_cod\":\"2232\",\"ikey\":\"00629401 \",\"room_nos\":\"602\",\"print_uninv\":\"Y\",\"uniinv_nos\":\"AA00008913\",\"ret_cod\":\"0000\",\"ret_msg\":\"\",\"uninvmn\":{\"comp_name\":\"德安大酒店\",\"uniinv_nos\":\"AA00008913\",\"uniinv_dat\":\"2018/11/06\",\"randomnumber\":\"9631\",\"sell_uni_cod\":\"23598233\",\"uni_cod\":\"\",\"rspt_nam\":\"客務櫃檯\",\"add_rmk\":\"台北市松江路309號8F\",\"machine_cod\":\"\",\"print_time\":\"2018-11-0602:11:56\",\"uniinv_amt\":\"1500\",\"uniinv_tax\":\"71.429\",\"net_uniinv_amt\":\"1428.5710\",\"yestax_amt\":\"1500\",\"notax_amt\":\"0\",\"zerotax_amt\":\"0\",\"remark2\":\"\",\"remark9\":\"沖客房訂金:1,500\",\"order_nos\":\"2018110600230FO01\",\"ins_usr_nam\":\"\",\"print_v_sta\":\"1\",\"bar_code\":\"10712AA000089139631\",\"qrcode\":\"4141303030303839313331303731313036393633313030303030356463303030303030343730303030303030303233353938323333723677786E6C6636306B4B4B5462786E4C316E3865413D3D3A2A2A2A2A2A2A2A2A2A2A3A313A313A313AE5AEA2E688BF3A313A31353030\",\"qrcode2\":\"2A2A\",\"uninvdt\":[{\"sell_nam\":\"客房\",\"unit_amt\":\"1500\",\"sell_qnt\":\"1\",\"sell_amt\":\"22000\",\"tax_sta\":\"TX\"},{\"sell_nam\":\"客房\",\"unit_amt\":\"1500\",\"sell_qnt\":\"1\",\"sell_amt\":\"30000\",\"tax_sta\":\"TX\"},{\"sell_nam\":\"客房\",\"unit_amt\":\"1500\",\"sell_qnt\":\"1\",\"sell_amt\":\"145680\",\"tax_sta\":\"TX\"},{\"sell_nam\":\"客房\",\"unit_amt\":\"1500\",\"sell_qnt\":\"1\",\"sell_amt\":\"1500\",\"tax_sta\":\"TX\"}]}},\"error_cod\":{\"ret_cod\":\"0000\",\"ret_msg\":\"\"}}"
+	var M11 = JSON.parse(x).result.uninvmn;
+	var list = [];
+	for (var i = 0; i < M11.uninvdt.length; i++) {
+		var obj = {
+			"ItemName": M11.uninvdt[i].sell_nam,
+			"ItemUnitPrice": M11.uninvdt[i].unit_amt,
+			"ItemQty": M11.uninvdt[i].sell_qnt,
+			"ItemSubTotal": M11.uninvdt[i].sell_amt,
+			"ItemTax": M11.uninvdt[i].tax_sta
+		}
+		list.push(obj)
+	}
+	// alert(JSON.stringify(list))
+	var year = Number(M11.print_time.substring(0, 4)) - 1911;
+	switch (M11.print_time.substring(5, 7)) {
+		case '01':
+		case '02':
+			period = year + '年01-02月'
+			break;
+		case '03':
+		case '04':
+			period = year + '年03-04月'
+			break;
+		case '05':
+		case '06':
+			period = year + '年05-06月'
+			break;
+		case '07':
+		case '08':
+			period = year + '年07-08月'
+			break;
+		case '09':
+		case '10':
+			period = year + '年09-10月'
+			break;
+		case '11':
+		case '12':
+			period = year + '年11-12月'
+			break;
+	}
+
+	var spcInvoiceString = {
+		"Logo": "C:\\ITKiosk\\html\\img\\banner.bmp",
+		"SellCompanyName": M11.comp_name,
+		"InvoicePeriod": period,
+		"InvoiceNo": M11.uniinv_nos.substring(0, 2) + '-' + M11.uniinv_nos.substring(2),
+		"InvoiceTime": M11.print_time,
+		"Formate": "25",
+		"RandomCode": M11.randomnumber,
+		"InvoiceAmount": M11.uniinv_amt,
+		"SellCode": M11.sell_uni_cod,
+		"BuyerCode": M11.uni_cod,
+		"BarCode": "10712AA000089178786",
+		"QRCode1": M11.qrcode,
+		"QRCode2": M11.qrcode2,
+		"CreditCardL4": M11.remark2,
+		"TotalAmount": M11.uniinv_amt,
+		"NetInvoiceAmount": M11.net_uniinv_amt,
+		"InvoiceTax": M11.uniinv_tax,
+		"InvoiceYesTaxAmount": M11.yestax_amt,
+		"Remark1": M11.remark9,
+		"Remark2": M11.uniinv_dat,
+		"Remark3": M11.ins_usr_nam,
+		"Remark4": "",
+		"SellCompanyAddress": M11.add_rmk,
+		"Store": M11.rspt_nam,
+		"Machine": M11.machine_cod,
+		"Seq": "",
+		"ItemList": list
+	};
+
+	// 電子發票加收據
+	function ElecPrint() {
+		kiosk.API.Device.Thermal.ElecPrint('TM-T70IIMU', function (res) {
+				alert(JSON.stringify(res));
+			},
+			JSON.stringify(spcInvoiceString));
+	}
+
+	// 電子發票
+	function OnlyInvoice() {
+		kiosk.API.Device.Thermal.OnlyInvoice('TM-T70IIMU', function (res) {
+				alert(JSON.stringify(res));
+			},
+			JSON.stringify(spcInvoiceString));
+	}
+
+	// 收據
+	function OnlyReceipt() {
+		kiosk.API.Device.Thermal.OnlyReceipt('TM-T70IIMU', function (res) {
+				alert(JSON.stringify(res));
+			},
+			JSON.stringify(spcInvoiceString));
+	}
+
+	function printImg() {
+		var data = {
+			name: 'xxx'
+		}
+		kiosk.API.Device.Thermal.PrintTemplatePage('TM-T70IIMU', 'test', data);
+		alert(JSON.stringify(result));
+	}
+
+	function GetPrintStatus() {
+
+		//取得印表機狀態
+		kiosk.API.Device.Thermal.getStatus('TM-T70IIMU', function (res) {
+			alert(JSON.stringify(res));
+		});
+
+	}
+
+	function ShudDown() {
+		//關機
+		kiosk.API.System.ShudDown();
+
+	}
+
+
+	function Reboot() {
+		//重開機
+		kiosk.API.System.Reboot();
+
+	}
+
+	function ShutDownAPP() {
+		//關閉應用程式
+		kiosk.API.System.ShotDownApp();
+
+	}
+
+	function ScannerOpen() {
+
+		//開啟Scanner連線
+		kiosk.API.Device.Scanner.openScanner(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {});
+
+	}
+
+	function StartScanner() {
+		//啟動Scanner掃瞄
+		kiosk.API.Device.Scanner.startScanner('', function (res) {
+			alert(JSON.stringify(res));
+		}, function () {});
+
+	}
+
+	function StopScanner() {
+		//停止Scanner掃瞄
+		kiosk.API.Device.Scanner.stopScanner('', function (res) {
+			alert(JSON.stringify(res));
+		}, function () {});
+
+	}
+
+	function ScannerReset() {
+
+		//重新掃瞄
+		kiosk.API.Device.Scanner.resetScanner(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {});
+	}
+
+	function ScannerGetStatus() {
+
+		//取得Scanner的狀態
+		kiosk.API.Device.Scanner.getStatus(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {});
+	}
+
+	// ECC Function 
+	function ECCInit() {
+		kiosk.API.Device.FIN.ECCInit(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {}, '20180608', '014801');
+	}
+
+	function ECCReadCard() {
+		kiosk.API.Device.FIN.ECCCardData(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {}, '20180608', '014801');
+	}
+
+	function ECCPayment() {
+		kiosk.API.Device.FIN.ECCPayment(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {}, '20180608', '014801', '5');
+	}
+
+	function ECCSettle() {
+		kiosk.API.Device.FIN.ECCSettle(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {}, '20180608', '014801');
+	}
+
+	function ECCStatus() {
+		kiosk.API.Device.FIN.ECCDeviceCheck(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {}, '20180608', '014801');
+	}
+
+	/// ORDER ID : 
+	/// TIME STR :
+	function O2OQRCODE() {
+		kiosk.API.Device.FIN.O2OQrCode(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {}, 'A1234577', '20180608014801');
+	}
+
+	/// ORDER ID : 
+	/// TIME STR :
+	function O2OQUERY() {
+		kiosk.API.Device.FIN.O2OQuery(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {}, 'A1234577', '20180608014801', 'P');
+	}
+
+	/// 中信卡機
+	function CTBCPayment() {
+		kiosk.API.Device.FIN.CTBCPayment(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {}, '1', 'STOREID123', '01');
+	}
+
+	function CTBCRefund() {
+		kiosk.API.Device.FIN.CTBCRefund(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {}, '1', 'STOREID123', '01');
+	}
+
+	function CTBCSettle() {
+		kiosk.API.Device.FIN.CTBCSettle(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {}, '1', 'STOREID123', '01');
+	}
+
+	/// 護照機
+	function PASSPORT_OPEN() {
+		kiosk.API.Device.WFX.init(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {});
+	}
+
+	function PASSPORT_CLOSE() {
+		kiosk.API.Device.WFX.exit(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {});
+	}
+
+	function PASSPORT_GET() {
+		kiosk.API.Device.WFX.getData(function (res) {
+			alert(JSON.stringify(res));
+		}, function (res) {
+			alert(JSON.stringify(res));
+		});
+	}
+
+	function PASSPORT_STOP() {
+		kiosk.API.Device.WFX.stopGet(function (res) {
+			alert(JSON.stringify(res));
+		}, function () {});
+	}
+</script>
+
+</html>

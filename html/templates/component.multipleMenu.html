@@ -1,0 +1,26 @@
+<script type="text/x-template" id="template-multipleMenu-navBar">
+    <div class="navbar navbar-default navbar-static-top">
+        <div class="container">
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav nav-bar-logo">
+                    <li>
+                        <a href="index.html" @click.stop.prevent="" @mousedown="kiosk.API.goHome"><img src="img/homeRound.png" /></a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav nav-bar-breadCrumb">
+                    <li>
+                        <a href="#" v-text="root"></a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-chevron-right"></i></a>
+                    </li>
+                    <li class="active">
+                        <a href="#" v-text="current"></a>
+                    </li>
+                </ul>
+                <component-common-langmenu v-bind:culture="culture "></component-common-langmenu>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </div>
+</script>

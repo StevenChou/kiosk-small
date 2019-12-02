@@ -1,0 +1,15 @@
+<script type="text/x-template" id="template-error-main">
+  <div class="container" :style="[cultureFontStyle]">
+      <img class="imgAlert" src="img/alert.png">
+      <div class="col-xs-12">
+          <div class="text-subTitle text-mid">{{wording.errorTitle}}</div>
+          <div class="text-subTitle text-mid" style="margin-top: 50px; font-size: 40px;">{{wording.errorTitle2}}</div>
+      </div>
+
+      <div class="logoImg5 text-subTitle" @click.stop.prevent="" @mousedown="goHome" style="position: relative;">
+              <img class="imgHome" src="img/home.svg" :style="[{position: 'absolute', left: '20px', top: '35px'}]">
+              <div :style="[btnFontSize]" v-html="wording.toHomeText"></div>
+      </div>
+
+  </div>
+</script>

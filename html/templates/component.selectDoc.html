@@ -1,0 +1,26 @@
+<script type="text/x-template" id="template-selectDoc-main">
+  <div class="container" :style="[cultureFontStyle]">
+      <div class="col-xs-12">
+          <div class="text-title text-mid" v-html="wording.selectTitle" :style="[titleFontSize]"></div>
+      </div>
+      <tr>
+          <td>
+              <div class="mgT20 mgPassportLeft" @click.stop.prevent="" @mousedown="handleMouseDown(wording.toScanPassport)">
+                  <div class="logoImg3 ">
+                      <img class="imgPassport" src="img/passport.png">
+                      <div class="text-subTitle text-mid mgT60" :style="[passportFontSize]">{{wording.passport}}</div>
+                  </div>
+              </div>
+          </td>
+          <td>
+              <div class="mgT20 mgPermitLeft" @click.stop.prevent="" @mousedown="handleMouseDown(wording.toScanPermit)">
+                  <div class="logoImg3 ">
+                      <img class="imgPermit" src="img/permit.png">
+                      <div id="app" class="text-subTitle text-mid mgT60" :style="[entryPermitFontSize]">
+                          {{wording.permit}}</div>
+                  </div>
+              </div>
+          </td>
+      </tr>
+  </div>
+</script>

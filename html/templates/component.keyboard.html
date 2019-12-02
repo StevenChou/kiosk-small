@@ -1,0 +1,123 @@
+<script type="text/x-template" id="template-keyboard-main">
+     <div class="container" style="margin-top:100px;">
+    <form class="form-inline">
+  <div class="form-group">
+  <!-- <label for="password">請輸入管理密碼</label> -->
+  <input class="form-control input-lg" style="width: 530px; height: 60px;" type="password" name="password" v-model='keyinValue' id="password" placeholder="請輸入管理密碼" readonly>
+  </div>
+  <button type="button" style="margin-left: 20px; font-weight:bold;" class="btn btn-danger btn-lg" @mousedown="handleMouseDown">確定</button>
+   </form>
+
+         <div class="row" style="margin-top: 30px;" v-for="(btnRow,index) in btnRows">
+           <div class="col-md-1" v-for="(button,index) in btnRow">
+                   <button type="button" class="btn btn-default " style="width: 80px; border-style: solid; border-color: #33d6ff; font-weight:bold;" @mousedown="keyin(button)">{{button}}</button>
+             </div>
+   		</div>
+     <div class="row" style="margin-top: 30px;">
+  	<div class="col-md-2">
+                   <button type="button" class="btn btn-default " style="width: 177px;font-weight:bold;" @mousedown="keyin('Clear')">Clear</button>
+  	 </div>
+  	 <div class="col-md-6">
+                   <button type="button" class="btn btn-default " style="width: 570px;font-weight:bold;" @mousedown="keyin('space')">Space</button>
+  	 </div>
+  	 <div class="col-md-2">
+                   <button type="button" class="btn btn-default " style="width: 177px;font-weight:bold;" @mousedown="keyin('←')">←</button>
+  	 </div>
+  </div>
+
+      	<!-- <div align="center">s
+      		<br>
+      		<br>
+      		<br>
+      		<p style="color:black;font-size:30px">
+      			<b>請輸入管理密碼</b>
+           </p>
+           <br>
+           <br>
+           <input type="password" name="password" v-model='keyinValue' id="password" style="width:300px;height:40px;" value="">
+           <button class="button button-caution btn-primary" style="height:50px;font-size:25px" @mousedown="handleMouseDown()">確認</button>
+      		<br>
+      		<br>
+      	</div> -->
+      	<div class="keyboard">
+      		<div class="keyboard__left">
+      			<!-- <div>
+      				<div @mousedown='keyin' class="key">$</div>
+      				<div @mousedown='keyin' class="key">%</div>
+      				<div @mousedown='keyin' class="key">?</div>
+
+      				<div @mousedown='keyin' class="key">:</div>
+      				<div @mousedown='keyin' class="key">;</div>
+      				<div @mousedown='keyin' class="key">/</div>
+      				<div @mousedown='keyin' class="key">*</div>
+      				<div @mousedown='keyin' class="key">-</div>
+      				<div @mousedown='keyin' class="key">+</div>
+      				<div @mousedown='keyin' class="key">@</div>
+      			</div> -->
+      			<!-- <div>
+      				<div @mousedown='keyin' class="key">Q</div>
+      				<div @mousedown='keyin' class="key">W</div>
+      				<div @mousedown='keyin' class="key">E</div>
+      				<div @mousedown='keyin' class="key">R</div>
+      				<div @mousedown='keyin' class="key">T</div>
+      				<div @mousedown='keyin' class="key">Y</div>
+      				<div @mousedown='keyin' class="key">U</div>
+      				<div @mousedown='keyin' class="key">I</div>
+      				<div @mousedown='keyin' class="key">O</div>
+      				<div @mousedown='keyin' class="key">P</div>
+
+      			</div> -->
+      			<!-- <div>
+      				<div @mousedown='keyin' class="key">A</div>
+      				<div @mousedown='keyin' class="key">S</div>
+      				<div @mousedown='keyin' class="key">D</div>
+      				<div @mousedown='keyin' class="key">F</div>
+      				<div @mousedown='keyin' class="key">G</div>
+      				<div @mousedown='keyin' class="key">H</div>
+      				<div @mousedown='keyin' class="key">J</div>
+      				<div @mousedown='keyin' class="key">K</div>
+      				<div @mousedown='keyin' class="key">L</div>
+      				<div @mousedown='keyin' class="key">.</div>
+      			</div> -->
+      			<!-- <div>
+      				<div @mousedown='keyin' class="key">Z</div>
+      				<div @mousedown='keyin' class="key">X</div>
+      				<div @mousedown='keyin' class="key">C</div>
+      				<div @mousedown='keyin' class="key">V</div>
+      				<div @mousedown='keyin' class="key">B</div>
+      				<div @mousedown='keyin' class="key">N</div>
+      				<div @mousedown='keyin' class="key">M</div>
+      				<div @mousedown='keyin' class="key">(</div>
+      				<div @mousedown='keyin' class="key">)</div>
+      				<div @mousedown='keyin' class="key">_</div>
+      			</div> -->
+      			<!-- <div class="keyboard__bottom-line">
+      				<div @mousedown='keyin' class="key keyboard__clear">Clear</div>
+      				<div @mousedown='spaceKeyin' class="key keyboard__space">&#32;</div>
+      				<div @mousedown='keyin' class="key keyboard__backspace">←</div>
+
+      			</div> -->
+      		</div>
+      		<div class="keyboard__right">
+      			<!-- <div>
+      				<div @mousedown='keyin' class="key">7</div>
+      				<div @mousedown='keyin' class="key">8</div>
+      				<div @mousedown='keyin' class="key">9</div>
+      			</div>
+      			<div>
+      				<div @mousedown='keyin' class="key">4</div>
+      				<div @mousedown='keyin' class="key">5</div>
+      				<div @mousedown='keyin' class="key">6</div>
+      			</div>
+      			<div>
+      				<div @mousedown='keyin' class="key">1</div>
+      				<div @mousedown='keyin' class="key">2</div>
+      				<div @mousedown='keyin' class="key">3</div>
+      			</div>
+      			<div>
+      				<div @mousedown='keyin' class="key">0</div>
+      			</div> -->
+      		</div>
+      	</div>
+      </div>
+</script>

@@ -1,0 +1,18 @@
+<!--杝醒頝-->
+<script type="text/x-template" id="template-remind-main">
+  <div class="container" :style="[cultureFontStyle]">
+      <div class="mgT50-mid"><img class="imgHW" src="img/taipei101.png"></div>
+      <div class="mgT60 text-center">
+          <div class="col-xs-12">
+              <div class="text-title text-mid" style="font-weight: bold;">{{wording.remindTitle1}}</div>
+
+              <div class="text-subTitle text-mid" style="font-weight: bold;">{{wording.remindTitle2}}<br><br>{{wording.remindTitle3}}</div>
+          </div>
+          <div class="col-xs-offset-4 col-xs-4" style="margin-top: 30px; position: relative;">
+              <div @click.stop.prevent="" @mousedown="handleMouseDown(wording.toSelectDoc)" class="logoImg2">
+                <b v-bind:style="{color:item.color}" class="text-subTitle2" :style="[btnSize]" style="font-weight: bold;"> {{wording.btTitle}} </b>
+              </div>
+          </div>
+      </div>
+  </div>
+</script>

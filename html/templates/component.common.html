@@ -1,0 +1,55 @@
+<!--Common 多語系選擇-->
+<!-- <script type="text/x-template" id="template-navbar-common-homeicon">
+    <div  @click.stop.prevent="" @mousedown="kiosk.API.goHome" class="nav navbar-nav navbar-right nav-bar-lang">
+        <img class="imgHome" src="img/home.svg" />
+        <div class="textHome">首頁</div>
+    </div>
+</script> -->
+
+<!--Common 頁首-->
+<script type="text/x-template" id="template-common-navBar">
+  <div class="navbar navbar-default navbar-static-top" >
+      <div class="container">
+          <div @click.stop.prevent="" @mousedown="backBtn" :class="[cssLeftBtn.class1,cssLeftBtn.class2,cssLeftBtn.class3,navBtnSize]">
+              <img class="imgHome" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEzSURBVEhL7dW9SgNBFMXx9QMVU9lZWAlWammd4BvYCzba+Q52omghCIJg7wOkEMHCRxCSLoKIougDKIJg/mdIYFh2zZ0VL4I58CPcIbuHXTKTbJi/lpHep2uW8IjzMDlFpa/4wr0WPBKXuhXnS12Kl5EvlQfU8CspK4294Q5N7KCBMVSOpbTMEw4wi+To4qKbptDb2MUkzLlA0c2quME8TJnGFYpuVMUztDtM+a78Ax284LO3Noh2whxMKSuP9/EEFrCGQ7SQ/37fNcxnfVH5oANkEad4R3ydbMGcfLn15NKP6hJxsf5kpmBOXH6rBWNGsYe4fB1JUfkxNsOUlrhc29Ut49CeVrEOl6TX/dPU0X/qVS14pg0Vb4fJMftQ8VGYHLMBFZ+FyTEzOMFKmIb5B8myLv+9tE4EsvnLAAAAAElFTkSuQmCC">
+              <div :class="navHomeBtn" :style="[cultureFontStyle]">{{wording.prePage}}</div>
+          </div>
+          <!-- <component-common-homeicon></component-common-homeicon> -->
+          <!-- <div  @click.stop.prevent="" @mousedown="goHome" class="nav navbar-nav navbar-right nav-bar-lang">
+              <img class="imgHome" src="img/home.svg" />
+              <div :class="navHomeBtn">{{wording.indexPage}}</div>
+          </div> -->
+          <div  @click.stop.prevent="" @mousedown="goHome" :class="[cssRightBtn.class1,cssRightBtn.class2,cssRightBtn.class3,navBtnSize]">
+              <img class="imgHome" src="img/home.svg" />
+              <div :class="navHomeBtn" :style="[cultureFontStyle]">{{wording.indexPage}}</div>
+          </div>
+      </div>
+  </div>
+</script>
+
+<!--Common 頁尾-->
+<script type="text/x-template" id="template-common-foot">
+  <footer class="footer2">
+      <div class="container">
+          <div class="btnBottom">
+              <div class="row">
+                  <div class="col-xs-4 text-left">
+                      <a v-show="showBack" class="btn btn-lg btn-grey btn-arrow-left"
+                         href="#" v-bind:disabled="disableBack" @mousedown="backBtn">BACK</a>
+                  </div>
+                  <div class="col-xs-4 text-center">
+                      <a v-show="showCancel" class="btn btn-lg btn-dgrey"
+                         v-bind:disabled="disableCancel"
+                         href="#" @mousedown="cancelBtn">CANCEL</a>
+                  </div>
+                  <div class="col-xs-4 text-right">
+                      <a v-show="showNext" class="btn btn-lg btn-blue btn-arrow-right"
+                         v-bind:class="{ active:disableNext}" href="#"
+                         v-bind:disabled="disableNext"
+                         @mousedown="nextBtn">NEXT</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </footer>
+</script>

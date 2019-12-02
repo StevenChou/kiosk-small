@@ -1,0 +1,36 @@
+<script type="text/x-template" id="template-scanPermit-main">
+  <div class="container" :style="[cultureFontStyle]">
+      <div class="col-xs-12">
+          <div class="text-title text-mid mgT30" :style="[btnSize]">{{wording.scanPermitTitle}}</div>
+      </div>
+      <!-- <div class="mgT60">
+          <tr>
+              <td>
+                  <div @mousedown="ScannerOpen()" class="logoImg">ScannerOpen</div>
+              </td>
+              <td>
+                  <div @mousedown="StartScanner()" class="logoImg">StartScanner</div>
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  <div @mousedown="StopScanner()" class="logoImg">StopScanner</div>
+              </td>
+              <td>
+                  <div @mousedown="ScannerReset()" class="logoImg">ScannerReset</div>
+              </td>
+              <td>
+                  <div @mousedown="ScannerGetStatus()" class="logoImg">ScannerGetStatus</div>
+              </td>
+          </tr>
+      </div> -->
+      <!-- <div class="logoImg4 text-title2" @mousedown="handleMouseDown(wording.toError)">
+          {{wording.scanError}}
+      </div> -->
+      <div class="logoImg4 text-title4">
+          <div v-html="infoData"></div>
+      </div>
+      <!-- <img class="imgPassportSample" src="img/scanPermit.png" @mousedown="handleMouseDown(wording.toPreScanQR)"> -->
+      <img class="imgPassportSample" src="img/scanPermit.jpg">
+  </div>
+</script>
