@@ -7,112 +7,107 @@ Vue.component('component-scanPermit-main', {
       megCode: 'putPermit',
       scanCount: 0,
       fixedCount: 5,
-      enterConter: 0
+      enterCounter: 0,
+      hiddenElRef: 'hiddenInput'
     };
   },
   methods: {
-    metaKeyUp: function() {
+    clearScanData: function() {
+      this.$refs[this.hiddenElRef].value = '';
+    },
+    focusScanData: function() {
+      this.$refs[this.hiddenElRef].focus();
+    },
+    getScanData: function() {
+      return this.$refs[this.hiddenElRef].value;
+    },
+    handleKeyUp: function() {
       let key = event.keyCode || event.which;
 
-      if (key == 13) {
-        if (++this.enterConter == 2) {
-          alert('>>> scan succ !!');
-          this.enterConter = 0;
-          // testBarcode();
+      if (key === 13) {
+        if (++this.enterCounter === 2) {
+          this.enterCounter = 0;
+          this.validScanData() && this.showBarcode();
+          // this.validScanData() && this.getPermitData();
         }
       }
     },
-    showBarcode: function() {
-      alert(this.$refs.hiddenInput.value);
-      this.$refs.hiddenInput.value = '';
-      this.testFocus();
+    validScanData: function() {
+      // 判斷 SCAN 資料正確性
+      // TODO 解析 this.getScanData()
+      alert('>>> scan succ !!');
+      return true;
     },
-    testFocus: function() {
-      this.$refs.hiddenInput.focus();
+    showBarcode: function() {
+      // for testing
+      alert(this.getScanData());
+      this.clearScanData();
+      this.focusScanData();
     },
     // Btn Click
     handleMouseDown: function(nextId) {
       kiosk.API.goToNext(nextId);
     },
-    ScannerOpen: function() {
-      kiosk.API.Device.Scanner.openScanner(
-        function(res) {
-          alert(JSON.stringify(res));
-        },
-        function() {}
-      );
-    },
-    StartScanner: function() {
+    getPermitData: function() {
       this.scanCount++;
-      // alert('>>> 第 ' + this.scanCount + '次掃描入臺證');
+
       if (this.scanCount === this.fixedCount) {
         kiosk.API.goToNext('error');
         return;
       }
 
       const scanPermit = this;
-      kiosk.API.Device.Scanner.startScanner('', function(res) {
-        // if (res.match(/^[a-zA-Z]{2}[-]?[0-9]{8}/g)) {
-        //   alert('QR code:' + res.substr(0, 10) + res.substr(17, 4));
-        // } else {
-        //   alert('Bar code:' + res.substr(5, 14));
-        // }
+      //查詢移民署
+      const postData = {
+        passportNo: this.getScanData(),
+        country: 'CN'
+      };
 
-        // [TESTING] 測試訊息
-        // alert('>>> res:' + res);
+      External.TradevanKioskCommon.CommonService.CallImm(
+        JSON.stringify(postData),
+        function(res) {
+          // alert('>>> json string:' + res);
+          const resObj = JSON.parse(res);
+          // alert(
+          //   '>>> 回傳資訊:' +
+          //     resObj.result['message'] +
+          //     '---' +
+          //     resObj.result['status']
+          // );
 
-        //查詢移民署
-        const postData = {
-          passportNo: res,
-          country: 'CN'
-        };
+          // succ
+          if (resObj && resObj.result['status'] === '000') {
+            // [TESTING] 測試訊息
+            // alert('>>> api成功');
 
-        // [TESTING] 測試訊息
-        // alert('>>> postData:' + JSON.stringify(postData));
-        External.TradevanKioskCommon.CommonService.CallImm(
-          JSON.stringify(postData),
-          function(res) {
-            // alert('>>> json string:' + res);
-            const resObj = JSON.parse(res);
+            // scanPassportObj.lock = true;
+
+            scanPermit.megCode = 'passportCerted';
+
+            // global data --- 儲存護照相關資訊
+            scanPermit.storeUserData(postData, resObj);
             // alert(
-            //   '>>> 回傳資訊:' +
-            //     resObj.result['message'] +
-            //     '---' +
-            //     resObj.result['status']
+            //   '>>> 入境證旅客資訊:' + JSON.stringify(kiosk.app.$data.userData)
             // );
 
-            // succ
-            if (resObj && resObj.result['status'] === '000') {
-              // [TESTING] 測試訊息
-              // alert('>>> api成功');
-
-              // scanPassportObj.lock = true;
-
-              scanPermit.megCode = 'passportCerted';
-
-              // global data --- 儲存護照相關資訊
-              scanPermit.storeUserData(postData, resObj);
-              // alert(
-              //   '>>> 入境證旅客資訊:' + JSON.stringify(kiosk.app.$data.userData)
-              // );
-
-              scanPermit.megCode = 'permitCerting';
+            scanPermit.megCode = 'permitCerting';
+            setTimeout(function() {
+              scanPermit.megCode = 'permitCerted';
               setTimeout(function() {
-                scanPermit.megCode = 'permitCerted';
-                setTimeout(function() {
-                  kiosk.API.goToNext(scanPermit.wording['toPreScanQR']);
-                }, 1000);
+                kiosk.API.goToNext(scanPermit.wording['toPreScanQR']);
               }, 1000);
-            } else {
-              // [TESTING] 測試訊息
-              alert('>>> 請重新掃描');
-
-              scanPermit.StartScanner();
-            }
-          },
-          function() {}
-        );
-      });
+            }, 1000);
+          } else {
+            Swal.fire({
+              type: 'error',
+              title: '糟糕...',
+              text: '移民署伺服器錯誤!',
+              footer: '<a href>請通知客服~</a>'
+            });
+          }
+        },
+        function() {}
+      );
     },
     storeUserData: function(passportObj, validationObj) {
       kiosk.app.$data.userData['passportNo'] = passportObj['passportNo'].split(
@@ -127,25 +122,6 @@ Vue.component('component-scanPermit-main', {
       kiosk.app.$data.userData['ename'] = validationObj.result['ename'];
       kiosk.app.$data.userData['dayAmtTotal'] =
         validationObj.result['dayAmtTotal'];
-    },
-    StopScanner: function() {
-      kiosk.API.Device.Scanner.stopScanner();
-    },
-    ScannerReset: function() {
-      kiosk.API.Device.Scanner.resetScanner(
-        function(res) {
-          alert(JSON.stringify(res));
-        },
-        function() {}
-      );
-    },
-    ScannerGetStatus: function() {
-      kiosk.API.Device.Scanner.getStatus(
-        function(res) {
-          alert(JSON.stringify(res));
-        },
-        function() {}
-      );
     }
   },
   computed: {
@@ -181,15 +157,9 @@ Vue.component('component-scanPermit-main', {
     }
   },
   mounted: function() {
-    // this.ScannerOpen();
-    //this.StartScanner();
-    alert('>>>mounted !!');
-    this.testFocus();
+    this.focusScanData();
   },
-  beforeDestroy: function() {
-    this.StopScanner();
-    // this.ScannerReset();
-  },
+  beforeDestroy: function() {},
   created: function() {
     kiosk.app.clearUserData();
   }
