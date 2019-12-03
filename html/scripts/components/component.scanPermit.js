@@ -6,10 +6,30 @@ Vue.component('component-scanPermit-main', {
     return {
       megCode: 'putPermit',
       scanCount: 0,
-      fixedCount: 5
+      fixedCount: 5,
+      enterConter: 0
     };
   },
   methods: {
+    metaKeyUp: function() {
+      let key = event.keyCode || event.which;
+
+      if (key == 13) {
+        if (++this.enterConter == 2) {
+          alert('>>> scan succ !!');
+          this.enterConter = 0;
+          // testBarcode();
+        }
+      }
+    },
+    showBarcode: function() {
+      alert(this.$refs.hiddenInput.value);
+      this.$refs.hiddenInput.value = '';
+      this.testFocus();
+    },
+    testFocus: function() {
+      this.$refs.hiddenInput.focus();
+    },
     // Btn Click
     handleMouseDown: function(nextId) {
       kiosk.API.goToNext(nextId);
@@ -162,7 +182,9 @@ Vue.component('component-scanPermit-main', {
   },
   mounted: function() {
     // this.ScannerOpen();
-    this.StartScanner();
+    //this.StartScanner();
+    alert('>>>mounted !!');
+    this.testFocus();
   },
   beforeDestroy: function() {
     this.StopScanner();

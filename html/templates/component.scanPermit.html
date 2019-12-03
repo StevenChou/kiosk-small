@@ -20,7 +20,7 @@
                   <div @mousedown="ScannerReset()" class="logoImg">ScannerReset</div>
               </td>
               <td>
-                  <div @mousedown="ScannerGetStatus()" class="logoImg">ScannerGetStatus</div>
+                  <div @mousedown="ScannerGetSthatus()" class="logoImg">ScannerGetStatus</div>
               </td>
           </tr>
       </div> -->
@@ -32,5 +32,9 @@
       </div>
       <!-- <img class="imgPassportSample" src="img/scanPermit.png" @mousedown="handleMouseDown(wording.toPreScanQR)"> -->
       <img class="imgPassportSample" src="img/scanPermit.jpg">
+
+      <input  type="text" class="hiddenFocus no-outline" style="background-color: #eee;position: fixed;bottom: 0px;left: 0px;"
+        ref="hiddenInput" @keyup="metaKeyUp">
+      <button @click="showBarcode">hihi</button>
   </div>
 </script>
