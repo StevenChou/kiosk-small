@@ -262,9 +262,14 @@ Vue.component('component-scanQRcode-main', {
         // 此發票不能退稅，因為其中一筆品項不能退
         Swal.fire({
           type: 'warning',
-          // title: '糟糕...',
           // text: '此發票無法退稅，因為其中一筆品項不能退稅!',
-          html: '<h3>此發票無法退稅，因為其中一筆品項不能退稅!</h3>'
+          html:
+            '<h3>' +
+            kiosk.wording[this.culture].scanQRcode.scanQRError3 +
+            '</h3>' +
+            '<h3>' +
+            kiosk.wording[this.culture].scanQRcode.scanQRError4 +
+            '</h3>'
           // footer: '<a href>請通知客服~</a>'
         });
 
