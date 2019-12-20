@@ -8,7 +8,11 @@ Vue.component('component-scanPassport-main', {
       myInterval: null,
       megCode: '',
       scanCount: 0,
-      fixedCount: 5
+      fixedCount: 5,
+      isGet: false,
+      openTimer: null,
+      passportTimer: null,
+      lockBlock: false
     };
   },
   methods: {
@@ -16,111 +20,9 @@ Vue.component('component-scanPassport-main', {
     handleMouseDown: function(nextId) {
       kiosk.API.goToNext(nextId);
     },
-    doInterval: function() {
-      const scanPassportObj = this;
-      if (!scanPassportObj.lock) {
-        // 護照掃描中...
-        scanPassportObj.megCode = 'scanPassportLoading';
-
-        kiosk.API.Device.MMM.GetData(
-          function(res) {
-            if (!scanPassportObj.lock) {
-              // alert('>>> 第 ' + (scanPassportObj.scanCount + 1) + '次掃描護照');
-              scanPassportObj.lock = true;
-
-              const jsonObj = JSON.parse(res['jsonStr']);
-              if (
-                jsonObj['nationality'] !== '' &&
-                jsonObj['documentNumber'] !== ''
-              ) {
-                // 資料驗證中...
-                scanPassportObj.megCode = 'passportCerting';
-
-                // alert(
-                //   '掃描成功!! >>>nationality:' +
-                //     jsonObj['nationality'] +
-                //     '--->>>documentNumber' +
-                //     jsonObj['documentNumber']
-                // );
-
-                //查詢移民署
-                const postData = {
-                  passportNo: jsonObj['documentNumber'],
-                  country: jsonObj['nationality']
-                };
-                External.TradevanKioskCommon.CommonService.CallImm(
-                  JSON.stringify(postData),
-                  function(res) {
-                    //alert('>>> json string:' + res);
-                    const resObj = JSON.parse(res);
-                    // alert(
-                    //   '>>> 回傳資訊:' +
-                    //     resObj.result['message'] +
-                    //     '---' +
-                    //     resObj.result['status']
-                    // );
-
-                    // succ
-                    if (resObj && resObj.result['status'] === '000') {
-                      // alert('>>> api成功');
-                      // scanPassportObj.lock = true;
-
-                      scanPassportObj.megCode = 'passportCerted';
-
-                      // global data --- 儲存護照相關資訊
-                      scanPassportObj.storeUserData(jsonObj, resObj);
-
-                      setTimeout(function() {
-                        kiosk.API.goToNext(
-                          scanPassportObj.wording['toPreScanQR']
-                        );
-                      }, 1500);
-                    } else {
-                      // alert('>>> 重新掃描');
-                      scanPassportObj.lock = false;
-
-                      scanPassportObj.scanCount++;
-
-                      if (
-                        scanPassportObj.scanCount === scanPassportObj.fixedCount
-                      ) {
-                        kiosk.API.goToNext('error');
-                        scanPassportObj.lock = true;
-                        return;
-                      }
-
-                      // setTimeout(function() {
-                      //   kiosk.API.goToNext(
-                      //     scanPassportObj.wording['toPreScanQR']
-                      //   );
-                      // }, 1000);
-                    }
-                  },
-                  function() {
-                    alert('>>> 移民署連線錯誤!!');
-                  }
-                );
-              } else {
-                // 掃描不到 ---> 要重新啟動護照機!!
-                scanPassportObj.lock = false;
-                scanPassportObj.scanCount++;
-                if (scanPassportObj.scanCount === scanPassportObj.fixedCount) {
-                  kiosk.API.goToNext('error');
-                  scanPassportObj.lock = true;
-                  return;
-                }
-              }
-            }
-          },
-          function() {
-            alert('關閉 passport !!');
-          }
-        );
-      }
-    },
     storeUserData: function(passportObj, validationObj) {
-      kiosk.app.$data.userData['passportNo'] = passportObj['documentNumber'];
-      kiosk.app.$data.userData['country'] = passportObj['nationality'];
+      kiosk.app.$data.userData['passportNo'] = passportObj['DocumentNo'];
+      kiosk.app.$data.userData['country'] = passportObj['Nationality'];
       kiosk.app.$data.userData['inDate'] = validationObj.result['inDate']
         .split(' ')[0]
         .split('-')
@@ -130,16 +32,124 @@ Vue.component('component-scanPassport-main', {
       kiosk.app.$data.userData['dayAmtTotal'] =
         validationObj.result['dayAmtTotal'];
     },
-    startPassportScan: function() {
+    keepScanData: function() {
+      this.passportTimer = setInterval(this.getPassportData, 4000);
+    },
+    callImmigration: function(passportData) {
       const scanPassportObj = this;
-      this.doInterval();
-      this.myInterval = setInterval(scanPassportObj.doInterval, 6000);
+      //查詢移民署
+      const postData = {
+        passportNo: passportData['DocumentNo'],
+        country: passportData['Nationality']
+      };
+
+      try {
+        External.TradevanKioskCommon.CommonService.CallImm(
+          JSON.stringify(postData),
+          function(res) {
+            //alert('>>> json string:' + res);
+            const resObj = JSON.parse(res);
+            alert(
+              '>>> 移民署回傳資訊:' +
+                resObj.result['message'] +
+                '---' +
+                resObj.result['status']
+            );
+
+            // succ
+            if (resObj && resObj.result['status'] === '000') {
+              try {
+                scanPassportObj.isGet = true;
+                scanPassportObj.megCode = 'passportCerted';
+
+                // global data --- 儲存護照相關資訊
+                scanPassportObj.storeUserData(passportData, resObj);
+
+                setTimeout(function() {
+                  kiosk.API.goToNext(scanPassportObj.wording['toPreScanQR']);
+                }, 1500);
+              } catch (error) {
+                alert('>>> 移民署無法導頁' + error);
+              }
+            } else {
+              scanPassportObj.scanCount++;
+              scanPassportObj.lockBlock = false;
+
+              if (scanPassportObj.scanCount === scanPassportObj.fixedCount) {
+                kiosk.API.goToNext('error');
+                return;
+              }
+            }
+          },
+          function() {
+            alert('>>> 移民署連線錯誤!!');
+          }
+        );
+      } catch (err) {
+        alert('>>> 移民署資料查詢失敗：' + err);
+      }
+    },
+    getPassportData: function(cb) {
+      const scanPassportObj = this;
+
+      if (scanPassportObj.isGet) {
+        return clearInterval(scanPassportObj.passportTimer);
+      }
+
+      if (!scanPassportObj.lockBlock) {
+        // 護照掃描中...
+        scanPassportObj.megCode = 'scanPassportLoading';
+        scanPassportObj.lockBlock = true;
+        kiosk.API.Device.WFX.getData(
+          function(res) {
+            try {
+              const passportData = JSON.parse(res['dataStr']);
+              if (res['IsSuccess'] && passportData !== '') {
+                // alert(
+                //   '>>>keep passport data: ' +
+                //     'DocumentNo:' +
+                //     passportData['DocumentNo'] +
+                //     ' --- ' +
+                //     'Nationality:' +
+                //     passportData['Nationality']
+                // );
+
+                //查詢移民署
+                scanPassportObj.callImmigration(passportData);
+              } else {
+                scanPassportObj.lockBlock = false;
+                if (cb) {
+                  cb();
+                }
+
+                alert('>>>???keep 無法解析，重新呼叫取資料 API');
+              }
+            } catch (err) {
+              scanPassportObj.lockBlock = false;
+              alert(
+                '>>>##keep err:' +
+                  err +
+                  ' --- ' +
+                  '無法解析，重新呼叫取資料 API'
+              );
+              if (cb) {
+                cb();
+              }
+            }
+          },
+          function(res) {
+            alert('>>>$$keep error:' + JSON.stringify(res));
+          }
+        );
+      }
+    },
+    startPassportScan: function() {
+      this.getPassportData(this.keepScanData);
     },
     stopPassportScan: function() {
-      kiosk.API.Device.MMM.StopGet(
+      kiosk.API.Device.WFX.stopGet(
         function(res) {
-          // alert('關閉護照機');
-          // alert(JSON.stringify(res));
+          alert('>>> closed scan passport:' + JSON.stringify(res));
         },
         function() {}
       );
@@ -164,7 +174,7 @@ Vue.component('component-scanPassport-main', {
   beforeDestroy: function() {
     // alert('釋放資源!!');
     this.stopPassportScan();
-    clearInterval(this.myInterval);
+    //clearInterval(this.myInterval);
   },
   created: function() {
     kiosk.app.clearUserData();

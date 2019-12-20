@@ -1,22 +1,24 @@
 <!--Common �h�y�t���-->
 <script type="text/x-template" id="template-navbar-common-culture">
-  <div class="container">
-      <div class="seven-cols col-xs-1 mgLanBtLeft">
-          <tr v-for="(row,index) in rows">
-                  <td v-for="(button,index) in row">
-                    <div @click="handleMouseDown(button.next),changeCulture(button.culture)" class="logoImg">
-                      <b>{{button.name}}</b>
-                  </div>
-              </td>
-          </tr>
-      </div>
+    <div class="row">
+    <div class="col-xs-12" style="margin-top: 30px;">
+      <table style="background-color: #eee;width:90%; margin-left: 100px;">
+        <tr v-for="(row,index) in rows" >
+            <td v-for="(button,index) in row" >
+                <div @click="handleMouseDown(button.next),changeCulture(button.culture)" class="logoImg">
+                    <b style="font-size: 30px;">{{button.name}}</b>
+                </div>
+            </td>
+        </tr>
+      </table>
+    </div>
   </div>
 </script>
 
 <script type="text/x-template" id="template-mainMenu-main">
-  <div class="container">
-      <div class="mgT70-mid"><img class="imgHW" src="img/taipei101.png"></div>
-      <div class="col-xs-12">
+  <div class="container-fluid">
+      <div class="mgT70-mid"></div>
+      <div class="col-xs-12" style="margin-top: 30px;">
           <div class="text-title text-mid" style="font-family:華康儷中黑;">{{wording.mainMenuTitle1}}</div>
           <div class="text-subTitle text-mid" style="font-family:Myriad Web Pro;">{{wording.mainMenuTitle2}}<br>{{wording.mainMenuTitle3}}</div>
       </div>

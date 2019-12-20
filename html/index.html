@@ -241,6 +241,24 @@
       })(jQuery);
 
       $('body').disablescroll();
+
+      Swal.fire({
+        title:
+          '<span style="font-size: 24px;">' +
+          '系統啟動中' +
+          '</span>',
+        html:
+          '<div style="margin-top: 15px; margin-left: 25px;" class="lds-dual-ring"></div>',
+        showConfirmButton: false,
+        allowOutsideClick: false
+      });
+
+      /// 護照機
+      (function PASSPORT_OPEN() {
+        kiosk.API.Device.WFX.init(function (res) {
+          Swal.close();
+        }, function () { });
+      })();
     </script>
   </body>
 </html>
