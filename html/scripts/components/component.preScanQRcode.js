@@ -21,12 +21,12 @@ Vue.component('component-preScanQRcode-main', {
       let fontSize = null;
       switch (this.culture) {
         case 1:
-        case 7:
         case 3:
-          fontSize = 36;
+        case 13:
+        case 4:
+        case 2:
+          fontSize = 44;
           break;
-        default:
-          fontSize = 48;
       }
       return {
         fontSize: fontSize + 'px',
