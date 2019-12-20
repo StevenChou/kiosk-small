@@ -166,6 +166,19 @@ Vue.component('component-scanPassport-main', {
     },
     cultureFontStyle: function() {
       return kiosk.app.changeFontFamily(this.culture);
+    },
+    titleFontSize: function() {
+      let fontSize = null;
+      switch (this.culture) {
+        case 3:
+          fontSize = 54;
+          break;
+      }
+      return this.culture === 3
+        ? {
+            fontSize: fontSize + 'px'
+          }
+        : {};
     }
   },
   mounted: function() {
