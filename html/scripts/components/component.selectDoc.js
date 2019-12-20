@@ -18,6 +18,13 @@ Vue.component('component-selectDoc-main', {
     titleFontSize: function() {
       let fontSize = null;
       switch (this.culture) {
+        case 1:
+        case 3:
+        case 13:
+        case 4:
+        case 2:
+          fontSize = 44;
+          break;
         case 7:
         case 10:
           fontSize = 36;

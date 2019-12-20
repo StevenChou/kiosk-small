@@ -337,7 +337,7 @@ h3 {
 
 .nav-bar-lang2 {
   background: #fff;
-  border-radius: 35px;
+  border-radius: 25px;
   padding: 17px 17px 17px 8px;
   margin: 24px 0 0 15px;
   width: 180px;
@@ -345,7 +345,7 @@ h3 {
 
 .nav-bar-lang {
   background: #fff;
-  border-radius: 35px;
+  border-radius: 25px;
   padding: 17px 17px;
   margin: 24px 0 0 15px;
   width: 180px;
@@ -353,7 +353,7 @@ h3 {
 
 .nav__bar__en {
   background: #fff;
-  border-radius: 35px;
+  border-radius: 25px;
   padding: 17px 17px;
   margin: 24px 0 0 15px;
   width: 250px;
@@ -361,7 +361,7 @@ h3 {
 
 .nav__bar__tw {
   background: #fff;
-  border-radius: 35px;
+  border-radius: 25px;
   padding: 17px 17px;
   margin: 24px 0 0 15px;
   width: 200px;
@@ -369,7 +369,7 @@ h3 {
 
 .nav__bar__cn {
   background: #fff;
-  border-radius: 35px;
+  border-radius: 25px;
   padding: 17px 17px;
   margin: 24px 0 0 15px;
   width: 200px;
@@ -377,7 +377,7 @@ h3 {
 
 .nav__bar__jp {
   background: #fff;
-  border-radius: 35px;
+  border-radius: 25px;
   padding: 17px 17px;
   margin: 24px 0 0 15px;
   width: 250px;
@@ -385,7 +385,7 @@ h3 {
 
 .nav__bar__ko {
   background: #fff;
-  border-radius: 35px;
+  border-radius: 25px;
   padding: 17px 17px;
   margin: 24px 0 0 15px;
   width: 180px;
@@ -393,7 +393,7 @@ h3 {
 
 .nav__bar__es {
   background: #fff;
-  border-radius: 35px;
+  border-radius: 25px;
   padding: 17px 17px;
   margin: 24px 0 0 15px;
   width: 280px;
@@ -401,7 +401,7 @@ h3 {
 
 .nav__bar__th {
   background: #fff;
-  border-radius: 35px;
+  border-radius: 25px;
   padding: 17px 17px;
   margin: 24px 0 0 15px;
   width: 200px;
@@ -409,7 +409,7 @@ h3 {
 
 .nav__bar__vi {
   background: #fff;
-  border-radius: 35px;
+  border-radius: 25px;
   padding: 17px 17px;
   margin: 24px 0 0 15px;
   width: 230px;
@@ -1062,7 +1062,7 @@ footer p {
 
 .logoImg2 {
   background: #ff3b21;
-  border-radius: 50px;
+  border-radius: 25px;
   text-align: center;
   -webkit-box-shadow: 0px 0px 5px 0px #777;
   -moz-box-shadow: 0px 0px 5px 0px #777;
