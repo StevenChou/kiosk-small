@@ -332,9 +332,9 @@
                 scanError: '无法辨识，请重新扫描护照',
                 toError: 'error',
                 toPreScanQR: 'preScanQRcode',
-                scanPassportLoading: '護照掃描中<div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div>',
-                passportCerting: '資料驗證中<div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div>',
-                passportCerted: '<div style="margin-top: 10px;">驗證成功</div>'
+                scanPassportLoading: '护照扫描中<div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div>',
+                passportCerting: '资料验证中<div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div>',
+                passportCerted: '<div style="margin-top: 10px;">验证成功</div>'
             },
             scanPermit: {
                 scanPermitTitle: '请扫描您的入境证条码',
@@ -342,8 +342,8 @@
                 toError: 'error',
                 toPreScanQR: 'preScanQRcode',
                 putPermit: '请将入境证左上方条码对准红外线扫描器',
-                permitCerting: '資料驗證中<div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div>',
-                permitCerted: '<div style="margin-top: 10px;">驗證成功</div>'
+                permitCerting: '资料验证中<div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div>',
+                permitCerted: '<div style="margin-top: 10px;">验证成功</div>'
             },
             error: {
                 errorTitle: '',
