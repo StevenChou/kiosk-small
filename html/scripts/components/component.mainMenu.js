@@ -3,8 +3,6 @@ Vue.component('component-mainMenu-main', {
   props: ['model', 'culture'],
   template: '#template-mainMenu-main',
   data: function() {
-    // 放這裡，有點怪吧!!
-    // kiosk.API.initStatus();
     return {
       activeLang: this.culture,
       keyboardLock: {
@@ -69,7 +67,6 @@ Vue.component('component-mainMenu-main', {
     }
   },
   created: function() {
-    // 改放這裡了!!
     kiosk.API.initStatus();
     kiosk.app.clearUserData();
 
@@ -77,7 +74,6 @@ Vue.component('component-mainMenu-main', {
     this.toClosingPage();
   },
   beforeDestroy: function() {
-    kiosk.app.setInitStatus(false);
     clearInterval(this.closingTimer);
   }
 });
