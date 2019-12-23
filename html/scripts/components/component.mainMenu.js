@@ -12,7 +12,17 @@ Vue.component('component-mainMenu-main', {
         topRightCount: 0,
         keyboardLockOne: true,
         keyboardLockTwo: true
-      }
+      },
+      closingTimeList: {
+        Sunday: { closingTime: '' },
+        Monday: { closingTime: '14:23' },
+        Tuesday: { closingTime: '' },
+        Wednesday: { closingTime: '' },
+        Thursday: { closingTime: '' },
+        Friday: { closingTime: '' },
+        Saturday: { closingTime: '' }
+      },
+      closingTimer: null
     };
   },
   methods: {
@@ -37,15 +47,20 @@ Vue.component('component-mainMenu-main', {
         kiosk.API.goToNext('keyboard');
       }
     },
-    OpenSecondMonitor: function() {
-      var data = {};
-      External.TradevanKioskCommon.CommonService.OpenSecendMonitor(
-        JSON.stringify(data),
-        function(res) {
-          alert(JSON.stringify(res));
-        },
-        function() {}
-      );
+    toClosingPage: function() {
+      const mainMenuObj = this;
+      mainMenuObj.closingTimer = setInterval(function() {
+        const curDateTime = moment()
+          .format('dddd,HH:mm')
+          .split(',');
+        if (
+          mainMenuObj.closingTimeList[curDateTime[0]].closingTime ===
+          curDateTime[1]
+        ) {
+          clearInterval(mainMenuObj.closingTimer);
+          kiosk.API.goToNext('closingPage');
+        }
+      }, 5000);
     }
   },
   computed: {
@@ -58,13 +73,12 @@ Vue.component('component-mainMenu-main', {
     kiosk.API.initStatus();
     kiosk.app.clearUserData();
 
-    // 開啟第二螢幕
-    if (kiosk.app.getInitStatus()) {
-      // this.OpenSecondMonitor();
-    }
+    // 導到暫停服務頁面！！
+    this.toClosingPage();
   },
   beforeDestroy: function() {
     kiosk.app.setInitStatus(false);
+    clearInterval(this.closingTimer);
   }
 });
 
