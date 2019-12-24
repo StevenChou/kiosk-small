@@ -12,13 +12,13 @@ Vue.component('component-mainMenu-main', {
         keyboardLockTwo: true
       },
       closingTimeList: {
-        Sunday: { closingTime: '' },
-        Monday: { closingTime: '14:23' },
-        Tuesday: { closingTime: '' },
-        Wednesday: { closingTime: '' },
-        Thursday: { closingTime: '' },
-        Friday: { closingTime: '' },
-        Saturday: { closingTime: '' }
+        Sunday: { closingTime: '21:30:00' },
+        Monday: { closingTime: '21:30:00' },
+        Tuesday: { closingTime: '15:30:00' },
+        Wednesday: { closingTime: '21:30:00' },
+        Thursday: { closingTime: '21:30:00' },
+        Friday: { closingTime: '22:00:00' },
+        Saturday: { closingTime: '22:00:00' }
       },
       closingTimer: null
     };
@@ -47,13 +47,27 @@ Vue.component('component-mainMenu-main', {
     },
     toClosingPage: function() {
       const mainMenuObj = this;
+
       mainMenuObj.closingTimer = setInterval(function() {
-        const curDateTime = moment()
-          .format('dddd,HH:mm')
+        const now = new Date();
+        const format = 'HH:mm:ss';
+        const curDateTime = moment(now)
+          .format('YYYY-MM-DD' + ',' + 'dddd' + ',' + format)
           .split(',');
+
+        const baseTimeStr =
+          mainMenuObj.closingTimeList[curDateTime[1]].closingTime;
+        const baseTime = moment(baseTimeStr, format)
+          .subtract(10, 'minutes')
+          .format(format);
+        // console.log('>>> baseTime:', baseTime);
+        const curTime = moment(curDateTime[2], format).format(format);
+        // console.log('>>> curTime:', curTime);
+
         if (
-          mainMenuObj.closingTimeList[curDateTime[0]].closingTime ===
-          curDateTime[1]
+          moment(curDateTime[0] + ' ' + curTime).isAfter(
+            curDateTime[0] + ' ' + baseTime
+          )
         ) {
           clearInterval(mainMenuObj.closingTimer);
           kiosk.API.goToNext('closingPage');
