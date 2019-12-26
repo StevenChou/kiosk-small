@@ -14,9 +14,9 @@ Vue.component('component-mainMenu-main', {
       closingTimeList: {
         Sunday: { closingTime: '21:30:00' },
         Monday: { closingTime: '21:30:00' },
-        Tuesday: { closingTime: '15:30:00' },
+        Tuesday: { closingTime: '21:30:00' },
         Wednesday: { closingTime: '21:30:00' },
-        Thursday: { closingTime: '21:30:00' },
+        Thursday: { closingTime: '18:00:00' },
         Friday: { closingTime: '22:00:00' },
         Saturday: { closingTime: '22:00:00' }
       },
@@ -46,6 +46,8 @@ Vue.component('component-mainMenu-main', {
       }
     },
     toClosingPage: function() {
+      // todo 區間設定 ---> 不使用 timer
+      // todo 前十分鐘，導入到暫停營業畫面 (timer 每十秒，執行一次！！)
       const mainMenuObj = this;
 
       mainMenuObj.closingTimer = setInterval(function() {
@@ -72,7 +74,7 @@ Vue.component('component-mainMenu-main', {
           clearInterval(mainMenuObj.closingTimer);
           kiosk.API.goToNext('closingPage');
         }
-      }, 5000);
+      }, 10000);
     }
   },
   computed: {
