@@ -10,7 +10,7 @@ Vue.component('component-closingPage-main', {
         Tuesday: { openingTime: '11:00:00' },
         Wednesday: { openingTime: '11:00:00' },
         Thursday: { openingTime: '11:00:00' },
-        Friday: { openingTime: '09:30:00' },
+        Friday: { openingTime: '11:00:00' },
         Saturday: { openingTime: '11:00:00' }
       },
       openingTimer: null
@@ -31,7 +31,7 @@ Vue.component('component-closingPage-main', {
           .split(',');
 
         const beforeTime = moment(
-          curDateTime[0] + ' ' + '17:20:00',
+          curDateTime[0] + ' ' + '21:20:00',
           ymdFormat + ' ' + timeFormat
         );
         const afterTime = moment(

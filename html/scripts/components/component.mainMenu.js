@@ -16,10 +16,11 @@ Vue.component('component-mainMenu-main', {
         Monday: { closingTime: '21:30:00' },
         Tuesday: { closingTime: '21:30:00' },
         Wednesday: { closingTime: '21:30:00' },
-        Thursday: { closingTime: '18:00:00' },
+        Thursday: { closingTime: '21:30:00' },
         Friday: { closingTime: '22:00:00' },
         Saturday: { closingTime: '22:00:00' }
       },
+      openingTime: '10:50:00', // 提前十分鐘開機 10:50:00
       closingTimer: null
     };
   },
@@ -46,25 +47,33 @@ Vue.component('component-mainMenu-main', {
       }
     },
     toClosingPage: function() {
-      // todo 區間設定 ---> 不使用 timer
-      // todo 前十分鐘，導入到暫停營業畫面 (timer 每十秒，執行一次！！)
       const mainMenuObj = this;
+      const now = new Date();
+      const timeFormat = 'HH:mm:ss';
+      const curDateTime = moment(now)
+        .format('YYYY-MM-DD' + ',' + 'dddd' + ',' + timeFormat)
+        .split(',');
+      const baseTimeStr =
+        mainMenuObj.closingTimeList[curDateTime[1]].closingTime;
+      const curTime = moment(curDateTime[2], timeFormat).format(timeFormat);
 
+      // ＊＊＊ [ 時間小於 10:50:00 直接導入暫停營業頁面 ] ＊＊＊
+      if (
+        moment(curDateTime[0] + ' ' + curTime).isBefore(
+          curDateTime[0] + ' ' + mainMenuObj.openingTime
+        )
+      ) {
+        kiosk.API.goToNext('closingPage');
+        // console.log('>>> 時間小於 10:50:00 直接導入暫停營業頁面');
+      }
+
+      // ＊＊＊ [ 設定 timer ---> 無限迴圈 ] ＊＊＊
+      // 前十分鐘，導入到暫停營業畫面 (timer 每十秒，執行一次！！)
+      // 時間大於關閉時間
       mainMenuObj.closingTimer = setInterval(function() {
-        const now = new Date();
-        const format = 'HH:mm:ss';
-        const curDateTime = moment(now)
-          .format('YYYY-MM-DD' + ',' + 'dddd' + ',' + format)
-          .split(',');
-
-        const baseTimeStr =
-          mainMenuObj.closingTimeList[curDateTime[1]].closingTime;
-        const baseTime = moment(baseTimeStr, format)
+        const baseTime = moment(baseTimeStr, timeFormat)
           .subtract(10, 'minutes')
-          .format(format);
-        // console.log('>>> baseTime:', baseTime);
-        const curTime = moment(curDateTime[2], format).format(format);
-        // console.log('>>> curTime:', curTime);
+          .format(timeFormat);
 
         if (
           moment(curDateTime[0] + ' ' + curTime).isAfter(
@@ -73,6 +82,10 @@ Vue.component('component-mainMenu-main', {
         ) {
           clearInterval(mainMenuObj.closingTimer);
           kiosk.API.goToNext('closingPage');
+          // console.log('>>> 時間大於關閉時間');
+        } else {
+          //console.log('>>> Timer is running!!');
+          // kiosk.API.goToNext('closingPage');
         }
       }, 10000);
     }
