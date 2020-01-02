@@ -52,10 +52,10 @@ Vue.component('component-closingPage-main', {
             .add(1, 'day')
             .format(ymdFormat + ',' + dayOfWeekFormat)
             .split(',');
-          console.log('>>>add one day dayInfo:', dayInfo[0], dayInfo[1]);
+          // console.log('>>>add one day dayInfo:', dayInfo[0], dayInfo[1]);
         } else {
           dayInfo = curDateTime;
-          console.log('>>> dayInfo:', dayInfo[0], dayInfo[1]);
+          // console.log('>>> dayInfo:', dayInfo[0], dayInfo[1]);
         }
         baseTimeStr = closingPageObj.openingTimeList[dayInfo[1]].openingTime;
 
@@ -63,9 +63,9 @@ Vue.component('component-closingPage-main', {
           .subtract(10, 'minutes')
           .format(timeFormat);
 
-        console.log('>>> baseTime:', baseTime);
+        // console.log('>>> baseTime:', baseTime);
         const curTime = moment(curDateTime[2], timeFormat).format(timeFormat);
-        console.log('>>> curTime:', curTime);
+        // console.log('>>> curTime:', curTime);
 
         if (
           moment(curDateTime[0] + ' ' + curTime).isAfter(
@@ -73,15 +73,15 @@ Vue.component('component-closingPage-main', {
           )
         ) {
           clearInterval(closingPageObj.openingTimer);
-          // kiosk.API.System.Reboot();
-          console.log('>>>@@@' + curDateTime[0] + ' ' + curTime);
-          console.log('>>>@@@' + dayInfo[0] + ' ' + baseTime);
-          alert(
-            '>>> 哈哈哈  ---> 重新開機吧！！' + curDateTime[0] + ' ' + curTime
-          );
+          kiosk.API.System.Reboot();
+          // console.log('>>>@@@' + curDateTime[0] + ' ' + curTime);
+          // console.log('>>>@@@' + dayInfo[0] + ' ' + baseTime);
+          // alert(
+          //   '>>> 哈哈哈  ---> 重新開機吧！！' + curDateTime[0] + ' ' + curTime
+          // );
         } else {
-          console.log('>>>' + curDateTime[0] + ' ' + curTime);
-          console.log('>>>' + dayInfo[0] + ' ' + baseTime);
+          // console.log('>>>' + curDateTime[0] + ' ' + curTime);
+          // console.log('>>>' + dayInfo[0] + ' ' + baseTime);
         }
       }, 10000);
     }
