@@ -99,7 +99,6 @@ Vue.component('component-mainMenu-main', {
     // this.toClosingPage(moment('2020-01-03 21:50:01', 'YYYY-MM-DD HH:mm:ss'));
   },
   beforeDestroy: function() {
-    alert('>>> 關閉 Timer!!');
     clearInterval(this.closingTimer);
   }
 });
