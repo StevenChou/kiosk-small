@@ -46,46 +46,40 @@ Vue.component('component-mainMenu-main', {
         kiosk.API.goToNext('keyboard');
       }
     },
-    toClosingPage: function() {
+    toClosingPage: function(unitTestTime) {
       const mainMenuObj = this;
-      const now = new Date();
-      const timeFormat = 'HH:mm:ss';
-      const curDateTime = moment(now)
-        .format('YYYY-MM-DD' + ',' + 'dddd' + ',' + timeFormat)
-        .split(',');
-      const baseTimeStr =
-        mainMenuObj.closingTimeList[curDateTime[1]].closingTime;
-      const curTime = moment(curDateTime[2], timeFormat).format(timeFormat);
-
-      // ＊＊＊ [ 時間小於 10:50:00 直接導入暫停營業頁面 ] ＊＊＊
-      if (
-        moment(curDateTime[0] + ' ' + curTime).isBefore(
-          curDateTime[0] + ' ' + mainMenuObj.openingTime
-        )
-      ) {
-        kiosk.API.goToNext('closingPage');
-        // console.log('>>> 時間小於 10:50:00 直接導入暫停營業頁面');
-      }
 
       // ＊＊＊ [ 設定 timer ---> 無限迴圈 ] ＊＊＊
       // 前十分鐘，導入到暫停營業畫面 (timer 每十秒，執行一次！！)
-      // 時間大於關閉時間
       mainMenuObj.closingTimer = setInterval(function() {
+        const now = !unitTestTime ? new Date() : unitTestTime;
+        const timeFormat = 'HH:mm:ss';
+        const curDateTime = moment(now)
+          .format('YYYY-MM-DD' + ',' + 'dddd' + ',' + timeFormat)
+          .split(',');
+        const baseTimeStr =
+          mainMenuObj.closingTimeList[curDateTime[1]].closingTime;
+        const curTime = moment(curDateTime[2], timeFormat).format(timeFormat);
         const baseTime = moment(baseTimeStr, timeFormat)
           .subtract(10, 'minutes')
           .format(timeFormat);
 
+        // ＊＊＊ [ 時間小於當日 10:50:00 直接導入暫停營業頁面 ] ＊＊＊
+        if (
+          moment(curDateTime[0] + ' ' + curTime).isBefore(
+            curDateTime[0] + ' ' + mainMenuObj.openingTime
+          )
+        ) {
+          kiosk.API.goToNext('closingPage');
+        }
+
+        // ＊＊＊ [ 現在時間大於關閉時間 ] ＊＊＊
         if (
           moment(curDateTime[0] + ' ' + curTime).isAfter(
             curDateTime[0] + ' ' + baseTime
           )
         ) {
-          clearInterval(mainMenuObj.closingTimer);
           kiosk.API.goToNext('closingPage');
-          // console.log('>>> 時間大於關閉時間');
-        } else {
-          //console.log('>>> Timer is running!!');
-          // kiosk.API.goToNext('closingPage');
         }
       }, 10000);
     }
@@ -101,8 +95,11 @@ Vue.component('component-mainMenu-main', {
 
     // 導到暫停服務頁面！！
     this.toClosingPage();
+    // [UnitTest]
+    // this.toClosingPage(moment('2020-01-03 21:50:01', 'YYYY-MM-DD HH:mm:ss'));
   },
   beforeDestroy: function() {
+    alert('>>> 關閉 Timer!!');
     clearInterval(this.closingTimer);
   }
 });
