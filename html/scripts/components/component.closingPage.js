@@ -17,11 +17,11 @@ Vue.component('component-closingPage-main', {
     };
   },
   methods: {
-    restartSys: function() {
+    restartSys: function(unitTestTime) {
       const closingPageObj = this;
 
       closingPageObj.openingTimer = setInterval(function() {
-        const now = new Date();
+        const now = !unitTestTime ? new Date() : unitTestTime;
         const timeFormat = 'HH:mm:ss';
         const ymdFormat = 'YYYY-MM-DD';
         const dayOfWeekFormat = 'dddd';
@@ -76,9 +76,9 @@ Vue.component('component-closingPage-main', {
           kiosk.API.System.Reboot();
           // console.log('>>>@@@' + curDateTime[0] + ' ' + curTime);
           // console.log('>>>@@@' + dayInfo[0] + ' ' + baseTime);
-          // alert(
-          //   '>>> 哈哈哈  ---> 重新開機吧！！' + curDateTime[0] + ' ' + curTime
-          // );
+          /* console.log(
+            '>>> 哈哈哈  ---> 重新開機吧！！' + curDateTime[0] + ' ' + curTime
+          ); */
         } else {
           // console.log('>>>' + curDateTime[0] + ' ' + curTime);
           // console.log('>>>' + dayInfo[0] + ' ' + baseTime);
@@ -93,6 +93,8 @@ Vue.component('component-closingPage-main', {
   },
   created: function() {
     this.restartSys();
+    // [UnitTest]
+    // this.restartSys(moment('2020-01-09 21:45:01', 'YYYY-MM-DD HH:mm:ss'));
   },
   beforeDestroy: function() {
     clearInterval(this.openingTimer);

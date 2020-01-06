@@ -29,8 +29,6 @@ Vue.component('component-scanPassport-main', {
         .join('');
       kiosk.app.$data.userData['idn'] = validationObj.result['idn'];
       kiosk.app.$data.userData['ename'] = validationObj.result['ename'];
-      kiosk.app.$data.userData['dayAmtTotal'] =
-        validationObj.result['dayAmtTotal'];
 
       // [ 2020 新增 --- 退稅金額提醒 ]
       // 當日累計金額

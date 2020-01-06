@@ -294,6 +294,19 @@ Vue.component('component-scanQRcode-main', {
       };
       sendData.rows = sendData.rows.concat(invoiceData.rows);
       sendData.rows = sendData.rows.concat(scanQRcode.invoiceItems);
+
+      // 2020/01/05 --- 退稅額限制(發票金額)
+      if (!scanQRcode.varifyAmt(sendData.rows)) {
+        Swal.fire({
+          type: 'warning',
+          onClose: function() {},
+          width: 600,
+          html:
+            '<h3>' +
+            kiosk.wording[scanQRcode.culture].scanQRcode.amtErr +
+            '</h3>'
+        });
+      }
       /* invoiceData.rows.forEach(function(item) {
         sendData.rows.push(item);
       });
@@ -308,31 +321,17 @@ Vue.component('component-scanQRcode-main', {
           // alert('>>> refundAmt:' + JSON.parse(res).result.refundAmt);
           scanQRcode.netTaxRefund = JSON.parse(res).result.refundAmt;
 
-          // 2020/01/05
-          // 退稅額限制
-          if (scanQRcode.varifyAmt(scanQRcode.netTaxRefund)) {
-            /* invoiceData.rows.forEach(function(invoiceItem) {
+          /* invoiceData.rows.forEach(function(invoiceItem) {
               scanQRcode.invoiceItems.push(invoiceItem);
             }); */
-            scanQRcode.invoiceItems = scanQRcode.invoiceItems.concat(
-              invoiceData.rows
-            );
+          scanQRcode.invoiceItems = scanQRcode.invoiceItems.concat(
+            invoiceData.rows
+          );
 
-            // 處理非同步的問題
-            scanQRcode.addInvNum(invNo);
-            scanQRcode.number = scanQRcode.invoiceNum.length;
-            scanQRcode.amount = scanQRcode.calcuAmt();
-          } else {
-            Swal.fire({
-              type: 'warning',
-              onClose: function() {},
-              width: 600,
-              html:
-                '<h3>' +
-                kiosk.wording[scanQRcode.culture].scanQRcode.amtErr +
-                '</h3>'
-            });
-          }
+          // 處理非同步的問題
+          scanQRcode.addInvNum(invNo);
+          scanQRcode.number = scanQRcode.invoiceNum.length;
+          scanQRcode.amount = scanQRcode.calcuAmt();
 
           // alert('>>> 加入發票:' + JSON.stringify(scanQRcode.invoiceNum));
           // alert('>>> 加入品項後:' + JSON.stringify(scanQRcode.invoiceItems));
@@ -389,24 +388,24 @@ Vue.component('component-scanQRcode-main', {
 
       this.getInvNoInfo(invNo);
     },
-    varifyAmt: function(curAmt) {
+    varifyAmt: function(tempInvoiceItems) {
       //kiosk.app.$data.userData['sumIndateAmt'] = 777777;
       let isValid = true;
+      let sum = 0;
+      // 整張發票的所有品項
+      tempInvoiceItems.forEach(function(invoice) {
+        sum += parseInt(invoice.unvAmt);
+      });
+
       isValid =
         isValid &&
-        parseFloat(kiosk.app.$data.userData['dayAmtTotal']) +
-          parseFloat(curAmt) <
-          48000;
+        parseFloat(kiosk.app.$data.userData['dayAmtTotal']) + sum < 48000;
       isValid =
         isValid &&
-        parseFloat(kiosk.app.$data.userData['sumIndateAmt']) +
-          parseFloat(curAmt) <
-          120000;
+        parseFloat(kiosk.app.$data.userData['sumIndateAmt']) + sum < 120000;
       isValid =
         isValid &&
-        parseFloat(kiosk.app.$data.userData['yearAmtTotal']) +
-          parseFloat(curAmt) <
-          240000;
+        parseFloat(kiosk.app.$data.userData['yearAmtTotal']) + sum < 240000;
       return isValid;
     },
     StartScanner: function() {
