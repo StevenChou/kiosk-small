@@ -306,6 +306,8 @@ Vue.component('component-scanQRcode-main', {
             kiosk.wording[scanQRcode.culture].scanQRcode.amtErr +
             '</h3>'
         });
+
+        return;
       }
       /* invoiceData.rows.forEach(function(item) {
         sendData.rows.push(item);
