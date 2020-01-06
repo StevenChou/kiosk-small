@@ -31,6 +31,17 @@ Vue.component('component-scanPassport-main', {
       kiosk.app.$data.userData['ename'] = validationObj.result['ename'];
       kiosk.app.$data.userData['dayAmtTotal'] =
         validationObj.result['dayAmtTotal'];
+
+      // [ 2020 新增 --- 退稅金額提醒 ]
+      // 當日累計金額
+      kiosk.app.$data.userData['dayAmtTotal'] =
+        validationObj.result['dayAmtTotal'];
+      // 年度累計金額
+      kiosk.app.$data.userData['yearAmtTotal'] =
+        validationObj.result['yearAmtTotal'];
+      // 入境日累計金額
+      kiosk.app.$data.userData['sumIndateAmt'] =
+        validationObj.result['sumIndateAmt'];
     },
     keepScanData: function() {
       this.passportTimer = setInterval(this.getPassportData, 4000);
@@ -65,9 +76,26 @@ Vue.component('component-scanPassport-main', {
                 // global data --- 儲存護照相關資訊
                 scanPassportObj.storeUserData(passportData, resObj);
 
-                setTimeout(function() {
-                  kiosk.API.goToNext(scanPassportObj.wording['toPreScanQR']);
-                }, 1500);
+                if (scanPassportObj.varifyAmt()) {
+                  setTimeout(function() {
+                    kiosk.API.goToNext(scanPassportObj.wording['toPreScanQR']);
+                  }, 1500);
+                } else {
+                  Swal.fire({
+                    type: 'warning',
+                    onClose: function() {
+                      kiosk.API.goToNext('mainMenu');
+                    },
+                    width: 600,
+                    // text: '此發票無法退稅，因為其中一筆品項不能退稅!',
+                    html:
+                      '<h3>' +
+                      kiosk.wording[scanPassportObj.culture].scanPassport
+                        .amtErr +
+                      '</h3>'
+                    // footer: '<a href>請通知客服~</a>'
+                  });
+                }
               } catch (error) {
                 alert('>>> 移民署無法導頁' + error);
               }
@@ -142,6 +170,19 @@ Vue.component('component-scanPassport-main', {
           }
         );
       }
+    },
+    varifyAmt: function() {
+      //kiosk.app.$data.userData['sumIndateAmt'] = 777777;
+      let isValid = true;
+      isValid =
+        isValid && parseFloat(kiosk.app.$data.userData['dayAmtTotal']) < 48000;
+      isValid =
+        isValid &&
+        parseFloat(kiosk.app.$data.userData['sumIndateAmt']) < 120000;
+      isValid =
+        isValid &&
+        parseFloat(kiosk.app.$data.userData['yearAmtTotal']) < 240000;
+      return isValid;
     },
     startPassportScan: function() {
       this.getPassportData(this.keepScanData);

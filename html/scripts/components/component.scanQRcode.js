@@ -279,11 +279,11 @@ Vue.component('component-scanQRcode-main', {
       // alert('>>> 加入品項前:' + JSON.stringify(scanQRcode.invoiceItems));
 
       // add check property
-      invoiceData.rows.forEach(function(invoiceItem) {
+      /* invoiceData.rows.forEach(function(invoiceItem) {
         // invoiceItem['check'] = false;
         // data
         scanQRcode.invoiceItems.push(invoiceItem);
-      });
+      }); */
 
       // scanQRcode.addInvNum(invNo);
       // alert('>>> 加入發票:' + JSON.stringify(scanQRcode.invoiceNum));
@@ -292,9 +292,15 @@ Vue.component('component-scanQRcode-main', {
       const sendData = {
         rows: []
       };
-      scanQRcode.invoiceItems.forEach(function(item) {
+      sendData.rows = sendData.rows.concat(invoiceData.rows);
+      sendData.rows = sendData.rows.concat(scanQRcode.invoiceItems);
+      /* invoiceData.rows.forEach(function(item) {
         sendData.rows.push(item);
       });
+      scanQRcode.invoiceItems.forEach(function(item) {
+        sendData.rows.push(item);
+      }); */
+
       // alert('>>> call c# refund:' + JSON.stringify(sendData));
       External.TradevanKioskCommon.CommonService.CalRefund(
         JSON.stringify(sendData),
@@ -302,10 +308,31 @@ Vue.component('component-scanQRcode-main', {
           // alert('>>> refundAmt:' + JSON.parse(res).result.refundAmt);
           scanQRcode.netTaxRefund = JSON.parse(res).result.refundAmt;
 
-          // 處理非同步的問題
-          scanQRcode.addInvNum(invNo);
-          scanQRcode.number = scanQRcode.invoiceNum.length;
-          scanQRcode.amount = scanQRcode.calcuAmt();
+          // 2020/01/05
+          // 退稅額限制
+          if (scanQRcode.varifyAmt(scanQRcode.netTaxRefund)) {
+            /* invoiceData.rows.forEach(function(invoiceItem) {
+              scanQRcode.invoiceItems.push(invoiceItem);
+            }); */
+            scanQRcode.invoiceItems = scanQRcode.invoiceItems.concat(
+              invoiceData.rows
+            );
+
+            // 處理非同步的問題
+            scanQRcode.addInvNum(invNo);
+            scanQRcode.number = scanQRcode.invoiceNum.length;
+            scanQRcode.amount = scanQRcode.calcuAmt();
+          } else {
+            Swal.fire({
+              type: 'warning',
+              onClose: function() {},
+              width: 600,
+              html:
+                '<h3>' +
+                kiosk.wording[scanQRcode.culture].scanQRcode.amtErr +
+                '</h3>'
+            });
+          }
 
           // alert('>>> 加入發票:' + JSON.stringify(scanQRcode.invoiceNum));
           // alert('>>> 加入品項後:' + JSON.stringify(scanQRcode.invoiceItems));
@@ -361,6 +388,26 @@ Vue.component('component-scanQRcode-main', {
       }
 
       this.getInvNoInfo(invNo);
+    },
+    varifyAmt: function(curAmt) {
+      //kiosk.app.$data.userData['sumIndateAmt'] = 777777;
+      let isValid = true;
+      isValid =
+        isValid &&
+        parseFloat(kiosk.app.$data.userData['dayAmtTotal']) +
+          parseFloat(curAmt) <
+          48000;
+      isValid =
+        isValid &&
+        parseFloat(kiosk.app.$data.userData['sumIndateAmt']) +
+          parseFloat(curAmt) <
+          120000;
+      isValid =
+        isValid &&
+        parseFloat(kiosk.app.$data.userData['yearAmtTotal']) +
+          parseFloat(curAmt) <
+          240000;
+      return isValid;
     },
     StartScanner: function() {
       const scanQRcode = this;

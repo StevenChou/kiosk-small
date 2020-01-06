@@ -94,7 +94,23 @@ Vue.component('component-scanPermit-main', {
             setTimeout(function() {
               scanPermit.megCode = 'permitCerted';
               setTimeout(function() {
-                kiosk.API.goToNext(scanPermit.wording['toPreScanQR']);
+                if (scanPermit.varifyAmt()) {
+                  kiosk.API.goToNext(scanPermit.wording['toPreScanQR']);
+                } else {
+                  Swal.fire({
+                    type: 'warning',
+                    onClose: function() {
+                      kiosk.API.goToNext('mainMenu');
+                    },
+                    width: 600,
+                    // text: '此發票無法退稅，因為其中一筆品項不能退稅!',
+                    html:
+                      '<h3>' +
+                      kiosk.wording[scanPermit.culture].scanPermit.amtErr +
+                      '</h3>'
+                    // footer: '<a href>請通知客服~</a>'
+                  });
+                }
               }, 1000);
             }, 1000);
           } else {
@@ -122,6 +138,30 @@ Vue.component('component-scanPermit-main', {
       kiosk.app.$data.userData['ename'] = validationObj.result['ename'];
       kiosk.app.$data.userData['dayAmtTotal'] =
         validationObj.result['dayAmtTotal'];
+
+      // [ 2020 新增 --- 退稅金額提醒 ]
+      // 當日累計金額
+      kiosk.app.$data.userData['dayAmtTotal'] =
+        validationObj.result['dayAmtTotal'];
+      // 年度累計金額
+      kiosk.app.$data.userData['yearAmtTotal'] =
+        validationObj.result['yearAmtTotal'];
+      // 入境日累計金額
+      kiosk.app.$data.userData['sumIndateAmt'] =
+        validationObj.result['sumIndateAmt'];
+    },
+    varifyAmt: function() {
+      //kiosk.app.$data.userData['sumIndateAmt'] = 777777;
+      let isValid = true;
+      isValid =
+        isValid && parseFloat(kiosk.app.$data.userData['dayAmtTotal']) < 48000;
+      isValid =
+        isValid &&
+        parseFloat(kiosk.app.$data.userData['sumIndateAmt']) < 120000;
+      isValid =
+        isValid &&
+        parseFloat(kiosk.app.$data.userData['yearAmtTotal']) < 240000;
+      return isValid;
     }
   },
   computed: {
