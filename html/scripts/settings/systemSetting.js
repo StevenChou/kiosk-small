@@ -105,7 +105,9 @@
         passportCerting:
           'Verifying…<div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div>',
         passportCerted:
-          '<div style="margin-top: 10px;">Verification success</div>'
+          '<div style="margin-top: 10px;">Verification success</div>',
+        amtErr:
+          'Please proceed to Tax Refund Center,  we will help you apply for tax refund. You will collect refund at airports / ports before departure.'
       },
       scanPermit: {
         scanPermitTitle: 'Please scan barcode of your exit & entry permit.',
@@ -117,7 +119,9 @@
         permitCerting:
           'Verifying…<div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div>',
         permitCerted:
-          '<div style="margin-top: 10px;">Verification success</div>'
+          '<div style="margin-top: 10px;">Verification success</div>',
+        amtErr:
+          'Please proceed to Tax Refund Center,  we will help you apply for tax refund. You will collect refund at airports / ports before departure.'
       },
       error: {
         errorTitle: '',
@@ -155,6 +159,8 @@
         scanQRError4:
           'This invoice may contain non-refundable purchase; or this invoice is not issued today.',
         scanQRErrorDup: 'Verification success，<br>please scan next invoice.',
+        amtErr:
+          'The purchase exceeds NT$48,000.<br>Please proceed to Tax Refund Center,  we will help you apply for tax refund.<br>You will collect refund at airports / ports before departure.',
         scanQRcodeLoading:
           'Querying…<div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div>',
         dataProcess: 'Processing, please wait.',
@@ -237,7 +243,9 @@
           '護照掃描中<div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div>',
         passportCerting:
           '資料驗證中<div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div>',
-        passportCerted: '<div style="margin-top: 10px;">驗證成功</div>'
+        passportCerted: '<div style="margin-top: 10px;">驗證成功</div>',
+        amtErr:
+          '請前往退稅服務中心，我們將為您辦理大額退稅，您將於離境時領取退稅。'
       },
       scanPermit: {
         scanPermitTitle: '請掃描您的入境證條碼',
@@ -247,7 +255,9 @@
         putPermit: '請將入境證左上方條碼對準紅外線掃描器',
         permitCerting:
           '資料驗證中<div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div>',
-        permitCerted: '<div style="margin-top: 10px;">驗證成功</div>'
+        permitCerted: '<div style="margin-top: 10px;">驗證成功</div>',
+        amtErr:
+          '請前往退稅服務中心，我們將為您辦理大額退稅，您將於離境時領取退稅。'
       },
       error: {
         errorTitle: '',
@@ -282,6 +292,8 @@
         scanQRError3: '此發票無法退稅',
         scanQRError4: '發票中可能包含無法退稅商品或不是今日消費的發票',
         scanQRErrorDup: '發票重複輸入，<br>請掃描下一張',
+        amtErr:
+          '本次消費總金額已超過現場兌領退稅門檻。<br>請前往退稅服務中心，將有專人為您辦理大額退稅，您將於離境時領取退稅。',
         scanQRcodeLoading:
           '資料查詢中<div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div>',
         dataProcess: '作業中，請稍候',
@@ -360,7 +372,9 @@
           '护照扫描中<div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div>',
         passportCerting:
           '资料验证中<div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div>',
-        passportCerted: '<div style="margin-top: 10px;">验证成功</div>'
+        passportCerted: '<div style="margin-top: 10px;">验证成功</div>',
+        amtErr:
+          '请前往退税服务中心，我们将为您办理大额退税，您将於离境时领取退税。'
       },
       scanPermit: {
         scanPermitTitle: '请扫描您的入境证条码',
@@ -370,7 +384,9 @@
         putPermit: '请将入境证左上方条码对准红外线扫描器',
         permitCerting:
           '资料验证中<div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div>',
-        permitCerted: '<div style="margin-top: 10px;">验证成功</div>'
+        permitCerted: '<div style="margin-top: 10px;">验证成功</div>',
+        amtErr:
+          '请前往退税服务中心，我们将为您办理大额退税，您将於离境时领取退税。'
       },
       error: {
         errorTitle: '',
@@ -405,6 +421,8 @@
         scanQRError3: '此发票无法退税',
         scanQRError4: '发票中可能包含无法退税商品或不是今日消费的发票',
         scanQRErrorDup: '发票资料重复输入，<br>请扫描下一张',
+        amtErr:
+          '本次消费总金额已超过现场兑领退税门槛。<br>请前往退税服务中心，将有专人为您办理大额退税，您将於离境时领取退税。',
         scanQRcodeLoading:
           '資料查詢中<div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div>',
         dataProcess: '作业中，请稍候',
@@ -486,7 +504,9 @@
           'パスポートをスキャン中<div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div>',
         passportCerting:
           'データを検証中<div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div>',
-        passportCerted: '<div style="margin-top: 10px;">検証成功</div>'
+        passportCerted: '<div style="margin-top: 10px;">検証成功</div>',
+        amtErr:
+          '税還付サービスセンターにお越しください。我々がお客様のために多額の税還付手続きを行いますので、お客様は出国時に税還付金をお受け取りになれます。'
       },
       scanPermit: {
         scanPermitTitle: '台湾出入国許可証のバーコードをスキャンしてください',
@@ -498,7 +518,9 @@
           '台湾出入国許可証左上のバーコードを赤外線スキャナの位置に合わせてください',
         permitCerting:
           'データを検証中<div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div>',
-        permitCerted: '<div style="margin-top: 10px;">検証成功</div>'
+        permitCerted: '<div style="margin-top: 10px;">検証成功</div>',
+        amtErr:
+          '税還付サービスセンターにお越しください。我々がお客様のために多額の税還付手続きを行いますので、お客様は出国時に税還付金をお受け取りになれます。'
       },
       error: {
         errorTitle: '',
@@ -537,6 +559,8 @@
           '税金還付のできない商品が含まれているか、今日消費したレシートではない可能性があります。',
         scanQRErrorDup:
           '領収書情報はすでに入力済みです，<br>次のレシートをスキャンしてください',
+        amtErr:
+          '今回の消費総金額はすでに現場での税還付金限度額を超えました。<br>税還付サービスセンターにお越しください。専門スタッフが多額の税還付手続きを行いますので、お客様は出国時に税還付金をお受け取りになれます。',
         scanQRcodeLoading:
           'データを検索中<div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div>',
         dataProcess: 'お待ちください',
@@ -618,7 +642,9 @@
           '여권 스캔 중<div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div>',
         passportCerting:
           '정보 인증 중<div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div>',
-        passportCerted: '<div style="margin-top: 10px;">인증 성공</div>'
+        passportCerted: '<div style="margin-top: 10px;">인증 성공</div>',
+        amtErr:
+          '세금환급 서비스 센터로 가시면 귀하를 위해 고액 세금환급 처리를 도와드리겠습니다. 환급액은 출국 시에 수령하실 수 있습니다.'
       },
       scanPermit: {
         scanPermitTitle: '타이완 입국증 바코드를 스캔하세요',
@@ -629,7 +655,9 @@
           '타이완 입국증 왼쪽 상단의 바코드를 적외선 스캐너에 맞추세요.',
         permitCerting:
           '정보 인증 중<div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div>',
-        permitCerted: '<div style="margin-top: 10px;">인증 성공</div>'
+        permitCerted: '<div style="margin-top: 10px;">인증 성공</div>',
+        amtErr:
+          '세금환급 서비스 센터로 가시면 귀하를 위해 고액 세금환급 처리를 도와드리겠습니다. 환급액은 출국 시에 수령하실 수 있습니다.'
       },
       error: {
         errorTitle: '',
@@ -666,6 +694,8 @@
         scanQRError4:
           '영수증에 세금을 환급할 수 없는 상품이 포함되어 있거나, 금일 구매하신 영수증이 아닙니다.',
         scanQRErrorDup: '영수증 정보 중복 입력，<br>다음 장을 스캔하세요',
+        amtErr:
+          '이 소비 총액은 현장 세금환급 기준액을 초과했습니다.<br>세금환급 서비스 센터로 가시면 귀하를 위해 고액 세금환급 처리를 도와드리겠습니다. 환급액은 출국 시에 수령하실 수 있습니다.',
         scanQRcodeLoading:
           '정보 조회 중<div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div>',
         dataProcess: '기다려주세요',
@@ -748,7 +778,9 @@
           'กำลังสแกนหนังสือเดินทาง<div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div>',
         passportCerting:
           'กำลังยืนยันข้อมูล<div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div>',
-        passportCerted: '<div style="margin-top: 10px;">ยืนยันสำเร็จ</div>'
+        passportCerted: '<div style="margin-top: 10px;">ยืนยันสำเร็จ</div>',
+        amtErr:
+          'กรุณาติดต่อได้ที่ศูนย์บริการคืนภาษี เราจะดำเนินเรื่องคืนเงินภาษีให้ท่าน ทั้งนี้ท่านจะได้เงินภาษีคืนในวันที่ท่านเดินทางกลับประเทศ'
       },
       scanPermit: {
         scanPermitTitle: 'โปรดสแกนบาร์โค้ดใบบันทึกข้อมูลขาเข้าของคุณ',
@@ -759,7 +791,9 @@
           'โปรดวางบาร์โค้ดที่มุมด้านซ้ายบนของใบบันทึกขาเข้าตรงเครื่องสแกนเนอร์อินฟราเรด',
         permitCerting:
           'กำลังยืนยันข้อมูล<div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div>',
-        permitCerted: '<div style="margin-top: 10px;">ยืนยันสำเร็จ</div>'
+        permitCerted: '<div style="margin-top: 10px;">ยืนยันสำเร็จ</div>',
+        amtErr:
+          'กรุณาติดต่อได้ที่ศูนย์บริการคืนภาษี เราจะดำเนินเรื่องคืนเงินภาษีให้ท่าน ทั้งนี้ท่านจะได้เงินภาษีคืนในวันที่ท่านเดินทางกลับประเทศ'
       },
       error: {
         errorTitle: '',
@@ -797,6 +831,8 @@
         scanQRError4:
           'ใบแจ้งหนี้อาจหมายถึงสินค้าที่ไม่สามารถคืนเงินภาษีหรือเป็นใบแจ้งหนี้ที่ไม่ได้ใช้บริโภคภายในวันนั้นๆ',
         scanQRErrorDup: 'ป้อนข้อมูลใบแจ้งหนี้ซ้ำ <br>โปรดสแกนหน้าถัดไป',
+        amtErr:
+          'ยอดเงินบริโภคครั้งนี้เกินเลยเกณฑ์กฎระเบียบการคืนเงินภาษีแล้ว <br>กรุณาติดต่อได้ที่ศูนย์บริการคืนภาษี เราจะดำเนินเรื่องคืนเงินภาษีให้ท่าน ทั้งนี้ท่านจะได้เงินภาษีคืนในวันที่ท่านเดินทางกลับประเทศ',
         scanQRcodeLoading:
           'กำลังตรวจสอบข้อมูล<div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div>',
         dataProcess: 'กรุณารอสักครู่',
@@ -1009,7 +1045,9 @@
         passportCerting:
           'Verificando<div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div>',
         passportCerted:
-          '<div style="margin-top: 10px;">Verificado con éxito</div>'
+          '<div style="margin-top: 10px;">Verificado con éxito</div>',
+        amtErr:
+          'Acuda al Centro de Devolución de Impuestos y le ayudaremos a solicitar un reembolso de impuestos. Podrá retirar la cantidad reembolsada en puertos y aeropuertos antes de su partida.'
       },
       scanPermit: {
         scanPermitTitle:
@@ -1023,7 +1061,9 @@
         permitCerting:
           'Verificando<div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div>',
         permitCerted:
-          '<div style="margin-top: 10px;">Verificado con éxito</div>'
+          '<div style="margin-top: 10px;">Verificado con éxito</div>',
+        amtErr:
+          'Acuda al Centro de Devolución de Impuestos y le ayudaremos a solicitar un reembolso de impuestos. Podrá retirar la cantidad reembolsada en puertos y aeropuertos antes de su partida.'
       },
       error: {
         errorTitle: '',
@@ -1062,6 +1102,8 @@
           'Posiblemente el recibo contenga un artículo no sujeto a devolución de impuestos o el recibo no se corresponde a un compra realizada hoy.',
         scanQRErrorDup:
           'Datos de factura ya introducidos.<br>Escanee la siguiente factura',
+        amtErr:
+          'La compra excede los NT$48 000.<br>Acuda al Centro de Devolución de Impuestos y le ayudaremos a solicitar un reembolso de impuestos. Podrá retirar la cantidad reembolsada en puertos y aeropuertos antes de su partida.',
         scanQRcodeLoading:
           'Consultando…<div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div>',
         dataProcess: 'Por favor espera',
