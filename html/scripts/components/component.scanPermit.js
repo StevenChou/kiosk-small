@@ -25,26 +25,18 @@ Vue.component('component-scanPermit-main', {
       let key = event.keyCode || event.which;
 
       if (key === 13) {
-        if (++this.enterCounter === 2) {
-          this.enterCounter = 0;
-          this.validScanData() && this.showBarcode();
-          // this.validScanData() && this.getPermitData();
-        }
+        this.validScanData() && this.getPermitData();
       }
     },
     validScanData: function() {
-      // 判斷 SCAN 資料正確性
-      // TODO 解析 this.getScanData()
-      alert('>>> scan succ !!');
-      return true;
+      let isValid = true;
+      isValid = isValid && !!this.getScanData();
+      return isValid;
     },
-    showBarcode: function() {
-      // for testing
-      alert(this.getScanData());
+    clearHiddenBarcode: function() {
       this.clearScanData();
       this.focusScanData();
     },
-    // Btn Click
     handleMouseDown: function(nextId) {
       kiosk.API.goToNext(nextId);
     },
@@ -66,7 +58,6 @@ Vue.component('component-scanPermit-main', {
       External.TradevanKioskCommon.CommonService.CallImm(
         JSON.stringify(postData),
         function(res) {
-          // alert('>>> json string:' + res);
           const resObj = JSON.parse(res);
           // alert(
           //   '>>> 回傳資訊:' +
@@ -77,9 +68,6 @@ Vue.component('component-scanPermit-main', {
 
           // succ
           if (resObj && resObj.result['status'] === '000') {
-            // [TESTING] 測試訊息
-            // alert('>>> api成功');
-
             // scanPassportObj.lock = true;
 
             scanPermit.megCode = 'passportCerted';
@@ -103,12 +91,10 @@ Vue.component('component-scanPermit-main', {
                       kiosk.API.goToNext('mainMenu');
                     },
                     width: 600,
-                    // text: '此發票無法退稅，因為其中一筆品項不能退稅!',
                     html:
                       '<h3>' +
                       kiosk.wording[scanPermit.culture].scanPermit.amtErr +
                       '</h3>'
-                    // footer: '<a href>請通知客服~</a>'
                   });
                 }
               }, 1000);
@@ -120,6 +106,7 @@ Vue.component('component-scanPermit-main', {
               text: '移民署伺服器錯誤!',
               footer: '<a href>請通知客服~</a>'
             });
+            scanPermit.clearHiddenBarcode();
           }
         },
         function() {}
@@ -195,7 +182,10 @@ Vue.component('component-scanPermit-main', {
     }
   },
   mounted: function() {
-    this.focusScanData();
+    const scanPermitObj = this;
+    setTimeout(function() {
+      scanPermitObj.focusScanData();
+    }, 1000);
   },
   beforeDestroy: function() {},
   created: function() {
