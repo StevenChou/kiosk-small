@@ -21,7 +21,7 @@ Vue.component('component-scanPermit-main', {
     getScanData: function() {
       return this.$refs[this.hiddenElRef].value;
     },
-    handleKeyUp: function() {
+    handleKeyUp: function(event) {
       let key = event.keyCode || event.which;
 
       if (key === 13) {

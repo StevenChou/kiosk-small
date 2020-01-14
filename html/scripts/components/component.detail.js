@@ -172,7 +172,7 @@ Vue.component('component-detail-main', {
     }
   },
   mounted: function() {
-    console.log('>>>[mounted] detail');
+    // console.log('>>>[mounted] detail');
     if (this.hasCheckProperty()) {
       this.rows = kiosk.app.$data.invoiceNum;
       this.items = kiosk.app.$data.invoiceItems;
@@ -186,7 +186,7 @@ Vue.component('component-detail-main', {
     }
   },
   beforeDestroy: function() {
-    console.log('>>>[beforeDestroy] detail');
+    // console.log('>>>[beforeDestroy] detail');
     kiosk.app.$data.invoiceNum = this.rows;
     kiosk.app.$data.invoiceItems = this.items;
   }
