@@ -94,12 +94,12 @@ Vue.component('component-mainMenu-main', {
     kiosk.app.clearUserData();
 
     // 導到暫停服務頁面！！
-    this.toClosingPage();
+    // this.toClosingPage();
     // [UnitTest]
     // this.toClosingPage(moment('2020-01-09 21:45:01', 'YYYY-MM-DD HH:mm:ss'));
   },
   beforeDestroy: function() {
-    clearInterval(this.closingTimer);
+    // clearInterval(this.closingTimer);
   }
 });
 
