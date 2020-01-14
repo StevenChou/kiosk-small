@@ -354,19 +354,17 @@ Vue.component('component-scanQRcode-main', {
     },
     addInvItem: function(res) {
       const scanQRcode = this;
-      // 將 101 API 資料，轉換為關貿格式
-      // const invoiceData = this.transDataFormat(res, invNo);
       const invoiceData = res;
       const invNo = invoiceData.items[0].invNo;
 
       scanQRcode.megCode === 'scanQRcodeLoading' && (scanQRcode.megCode = '');
+
       // **** 當有一筆不能退的時候 return
+      // 此發票不能退稅，因為其中一筆品項不能退
       if (invoiceData.isRefund === 'N') {
-        // 此發票不能退稅，因為其中一筆品項不能退
         if (scanQRcode.megCode !== 'scanQRErrorDup') {
           Swal.fire({
             type: 'warning',
-            // text: '此發票無法退稅，因為其中一筆品項不能退稅!',
             html:
               '<h3>' +
               kiosk.wording[this.culture].scanQRcode.scanQRError3 +
@@ -374,7 +372,6 @@ Vue.component('component-scanQRcode-main', {
               '<h3>' +
               kiosk.wording[this.culture].scanQRcode.scanQRError4 +
               '</h3>'
-            // footer: '<a href>請通知客服~</a>'
           });
         }
 
