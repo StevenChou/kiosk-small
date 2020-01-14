@@ -64,24 +64,13 @@ Vue.component('component-scanQRcode-main', {
           scanQRcode.tempStr2 = scanQRcode
             .getScanData()
             .replace(scanQRcode.tempStr1, '');
-          // try {
-          //   alert('succ:' + JSON.stringify(scanQRcode.generateInvoiceItems()));
-          // } catch (e) {
-          //   alert('err:' + JSON.stringify(e));
-          // }
+
           try {
             scanQRcode.addInvItem(scanQRcode.generateInvoiceItems());
             scanQRcode.clearHiddenBarcode();
           } catch (e) {
             alert(JSON.stringify(e));
           }
-          // alert('>>> 準備解析');
-
-          // document.getElementById('myInput').focus();
-          // document.getElementById('myInput').value = '';
-          // this.enterConter = 0;
-          // this.tempStr1 = '';
-          // this.tempStr2 = '';
         }
       }
     },
@@ -136,7 +125,10 @@ Vue.component('component-scanQRcode-main', {
     checkRefund: function(invData) {
       let isValid = true;
       isValid = isValid && !this.isDup(invData.items[0].invNo);
-      isValid = isValid && invData.date === '1081106';
+      isValid =
+        isValid &&
+        invData.date ===
+          parseInt(moment(new Date()).format('YYYYMMDD') - 19110000);
       isValid = isValid && invData.sellerUniNum === '82901366';
       invData.isRefund = isValid ? 'Y' : 'N';
       return isValid;
