@@ -53,6 +53,7 @@ Vue.component('component-scanQRcode-main', {
     },
     handleKeyUp: function(event) {
       const scanQRcode = this;
+      scanQRcode.megCode = 'scanQRcodeLoading';
       let key = event.keyCode || event.which;
 
       if (key === 13) {
@@ -124,7 +125,9 @@ Vue.component('component-scanQRcode-main', {
     },
     checkRefund: function(invData) {
       let isValid = true;
-      isValid = isValid && !this.isDup(invData.items[0].invNo);
+      const invNo = invData.items[0].invNo;
+      isValid = isValid && !this.isDup(invNo);
+      isValid = isValid && this.isValidNo(invNo);
       isValid =
         isValid &&
         invData.date ===
@@ -314,7 +317,7 @@ Vue.component('component-scanQRcode-main', {
       return invData.match(/^[a-zA-Z]{2}[-]?[0-9]{8}/g);
     },
     isValidNo: function(invNo) {
-      return invNo === '' ? false : true;
+      return !!invNo.match(/^[a-zA-Z]{2}[-]?[0-9]{8}/g);
     },
     isDup: function(invNo) {
       const scanQRcode = this;
@@ -356,21 +359,24 @@ Vue.component('component-scanQRcode-main', {
       const invoiceData = res;
       const invNo = invoiceData.items[0].invNo;
 
+      scanQRcode.megCode === 'scanQRcodeLoading' && (scanQRcode.megCode = '');
       // **** 當有一筆不能退的時候 return
       if (invoiceData.isRefund === 'N') {
         // 此發票不能退稅，因為其中一筆品項不能退
-        Swal.fire({
-          type: 'warning',
-          // text: '此發票無法退稅，因為其中一筆品項不能退稅!',
-          html:
-            '<h3>' +
-            kiosk.wording[this.culture].scanQRcode.scanQRError3 +
-            '</h3>' +
-            '<h3>' +
-            kiosk.wording[this.culture].scanQRcode.scanQRError4 +
-            '</h3>'
-          // footer: '<a href>請通知客服~</a>'
-        });
+        if (scanQRcode.megCode !== 'scanQRErrorDup') {
+          Swal.fire({
+            type: 'warning',
+            // text: '此發票無法退稅，因為其中一筆品項不能退稅!',
+            html:
+              '<h3>' +
+              kiosk.wording[this.culture].scanQRcode.scanQRError3 +
+              '</h3>' +
+              '<h3>' +
+              kiosk.wording[this.culture].scanQRcode.scanQRError4 +
+              '</h3>'
+            // footer: '<a href>請通知客服~</a>'
+          });
+        }
 
         return;
       }
@@ -409,6 +415,7 @@ Vue.component('component-scanQRcode-main', {
           scanQRcode.addInvNum(invNo);
           scanQRcode.number = scanQRcode.invoiceNum.length;
           scanQRcode.amount = scanQRcode.calcuAmt();
+          // scanQRcode.megCode = '';
         },
         function() {}
       );
