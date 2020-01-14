@@ -15,10 +15,141 @@ Vue.component('component-scanQRcode-main', {
       invoiceItems: [],
       // 發票號碼
       invoiceNum: [],
-      megCode: ''
+      megCode: '',
+      tempStr1: '',
+      tempStr2: '',
+      hiddenElRef: 'hiddenInput',
+      enterConter: 0
     };
   },
   methods: {
+    // 發票品項物件
+    createInvItem: function() {
+      return {
+        invNo: '',
+        cname: '',
+        brand: '',
+        model: '',
+        unitAmt: 0,
+        qty: 0,
+        unvAmt: 0
+      };
+    },
+    clearScanData: function() {
+      this.$refs[this.hiddenElRef].value = '';
+    },
+    focusScanData: function() {
+      this.$refs[this.hiddenElRef].focus();
+    },
+    clearHiddenBarcode: function() {
+      this.clearScanData();
+      this.focusScanData();
+      this.enterConter = 0;
+      this.tempStr1 = '';
+      this.tempStr2 = '';
+    },
+    getScanData: function() {
+      return this.$refs[this.hiddenElRef].value;
+    },
+    handleKeyUp: function(event) {
+      const scanQRcode = this;
+      let key = event.keyCode || event.which;
+
+      if (key === 13) {
+        if (scanQRcode.enterConter === 0) {
+          scanQRcode.tempStr1 = scanQRcode.getScanData();
+        }
+
+        if (++scanQRcode.enterConter === 2) {
+          scanQRcode.tempStr2 = scanQRcode
+            .getScanData()
+            .replace(scanQRcode.tempStr1, '');
+          // try {
+          //   alert('succ:' + JSON.stringify(scanQRcode.generateInvoiceItems()));
+          // } catch (e) {
+          //   alert('err:' + JSON.stringify(e));
+          // }
+          try {
+            scanQRcode.addInvItem(scanQRcode.generateInvoiceItems());
+            scanQRcode.clearHiddenBarcode();
+          } catch (e) {
+            alert(JSON.stringify(e));
+          }
+          // alert('>>> 準備解析');
+
+          // document.getElementById('myInput').focus();
+          // document.getElementById('myInput').value = '';
+          // this.enterConter = 0;
+          // this.tempStr1 = '';
+          // this.tempStr2 = '';
+        }
+      }
+    },
+    getLeftQRCode: function() {
+      const pattern = new RegExp(/^[A-Za-z]{2}/);
+
+      return this.tempStr1.match(pattern) ? this.tempStr1 : this.tempStr2;
+    },
+    getRightQRCode: function() {
+      var pattern = new RegExp(/^[A-Za-z]{2}/);
+
+      return !this.tempStr1.match(pattern) ? this.tempStr1 : this.tempStr2;
+    },
+    parseQRCode: function(leftText, rightText, curContext) {
+      const invData = {
+        items: [],
+        isRefund: 'N',
+        date: '',
+        sellerUniNum: ''
+      };
+      // 發票品項
+      let invItem = curContext.createInvItem();
+
+      // left QRCode
+      const leftStrArray = leftText.split(':');
+      invItem.invNo = leftText.slice(0, 10);
+      invItem.cname = leftStrArray[5];
+      invItem.unitAmt = parseInt(leftStrArray[7]);
+      invItem.qty = parseInt(leftStrArray[6]);
+      invItem.unvAmt = invItem.unitAmt * invItem.qty;
+      invData.date = leftText.slice(10, 17);
+      invData.sellerUniNum = leftText.slice(45, 53);
+      invData.items.push(invItem);
+
+      // right QRCode
+      rightText.split(':').forEach(function(item, index) {
+        if (index % 3 === 0) {
+          invItem = curContext.createInvItem();
+          invItem.invNo = invData.items[0].invNo;
+          invItem.cname = index === 0 ? item.replace('**', '') : item;
+        } else if (index % 3 === 1) {
+          invItem.qty = parseInt(item);
+        } else {
+          invItem.unitAmt = parseInt(item);
+          invItem.unvAmt = invItem.unitAmt * invItem.qty;
+          invData.items.push(invItem);
+        }
+      });
+
+      return invData;
+    },
+    checkRefund: function(invData) {
+      let isValid = true;
+      isValid = isValid && !this.isDup(invData.items[0].invNo);
+      isValid = isValid && invData.date === '1081106';
+      isValid = isValid && invData.sellerUniNum === '82901366';
+      invData.isRefund = isValid ? 'Y' : 'N';
+      return isValid;
+    },
+    generateInvoiceItems: function() {
+      const invData = this.parseQRCode(
+        this.getLeftQRCode(),
+        this.getRightQRCode(),
+        this
+      );
+      this.checkRefund(invData);
+      return invData;
+    },
     // 千分位
     formatNumber: function(num) {
       return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
@@ -226,36 +357,12 @@ Vue.component('component-scanQRcode-main', {
         unitAmt: this.calcuAmt(invNo)
       });
     },
-    addInvItem: function(res, invNo) {
-      // alert('>>> 伺服器回傳資料:' + res.username);
+    addInvItem: function(res) {
       const scanQRcode = this;
-
-      // 模擬回傳資料[只能吃這個格式]
-      // const invoiceData = {
-      //   rows: [
-      //     {
-      //       invNo: invNo,
-      //       cname: '筆電' + Math.random(),
-      //       brand: 'ACER',
-      //       model: 'ACER',
-      //       unitAmt: 2000,
-      //       qty: 2,
-      //       unvAmt: 4000
-      //     },
-      //     {
-      //       invNo: invNo,
-      //       cname: '平板' + Math.random(),
-      //       brand: 'APPLE',
-      //       model: 'APPLE ipad air 3rd',
-      //       unitAmt: 1000,
-      //       qty: 3,
-      //       unvAmt: 3000
-      //     }
-      //   ]
-      // };
-
       // 將 101 API 資料，轉換為關貿格式
-      const invoiceData = this.transDataFormat(res, invNo);
+      // const invoiceData = this.transDataFormat(res, invNo);
+      const invoiceData = res;
+      const invNo = invoiceData.items[0].invNo;
 
       // **** 當有一筆不能退的時候 return
       if (invoiceData.isRefund === 'N') {
@@ -276,23 +383,10 @@ Vue.component('component-scanQRcode-main', {
         return;
       }
 
-      // alert('>>> 加入品項前:' + JSON.stringify(scanQRcode.invoiceItems));
-
-      // add check property
-      /* invoiceData.rows.forEach(function(invoiceItem) {
-        // invoiceItem['check'] = false;
-        // data
-        scanQRcode.invoiceItems.push(invoiceItem);
-      }); */
-
-      // scanQRcode.addInvNum(invNo);
-      // alert('>>> 加入發票:' + JSON.stringify(scanQRcode.invoiceNum));
-      // alert('>>> 加入品項後:' + JSON.stringify(scanQRcode.invoiceItems));
-
       const sendData = {
         rows: []
       };
-      sendData.rows = sendData.rows.concat(invoiceData.rows);
+      sendData.rows = sendData.rows.concat(invoiceData.items);
       sendData.rows = sendData.rows.concat(scanQRcode.invoiceItems);
 
       // 2020/01/05 --- 退稅額限制(發票金額)
@@ -309,34 +403,20 @@ Vue.component('component-scanQRcode-main', {
 
         return;
       }
-      /* invoiceData.rows.forEach(function(item) {
-        sendData.rows.push(item);
-      });
-      scanQRcode.invoiceItems.forEach(function(item) {
-        sendData.rows.push(item);
-      }); */
 
-      // alert('>>> call c# refund:' + JSON.stringify(sendData));
       External.TradevanKioskCommon.CommonService.CalRefund(
         JSON.stringify(sendData),
         function(res) {
-          // alert('>>> refundAmt:' + JSON.parse(res).result.refundAmt);
           scanQRcode.netTaxRefund = JSON.parse(res).result.refundAmt;
 
-          /* invoiceData.rows.forEach(function(invoiceItem) {
-              scanQRcode.invoiceItems.push(invoiceItem);
-            }); */
           scanQRcode.invoiceItems = scanQRcode.invoiceItems.concat(
-            invoiceData.rows
+            invoiceData.items
           );
 
           // 處理非同步的問題
           scanQRcode.addInvNum(invNo);
           scanQRcode.number = scanQRcode.invoiceNum.length;
           scanQRcode.amount = scanQRcode.calcuAmt();
-
-          // alert('>>> 加入發票:' + JSON.stringify(scanQRcode.invoiceNum));
-          // alert('>>> 加入品項後:' + JSON.stringify(scanQRcode.invoiceItems));
         },
         function() {}
       );
@@ -529,33 +609,42 @@ Vue.component('component-scanQRcode-main', {
     // 啟動單元測試
     // this.unitTest();
 
-    const scanQRcode = this;
-    this.invoiceItems = kiosk.app.$data.invoiceItems;
-    this.invoiceNum = kiosk.app.$data.invoiceNum;
-    this.number = this.invoiceNum.length;
-    this.amount = this.calcuAmt();
+    try {
+      const scanQRcode = this;
+      scanQRcode.invoiceItems = kiosk.app.$data.invoiceItems;
+      scanQRcode.invoiceNum = kiosk.app.$data.invoiceNum;
+      scanQRcode.number = scanQRcode.invoiceNum.length;
+      scanQRcode.amount = scanQRcode.calcuAmt();
 
-    const sendData = {
-      rows: []
-    };
-    scanQRcode.invoiceItems.forEach(function(item) {
-      sendData.rows.push(item);
-    });
-    External.TradevanKioskCommon.CommonService.CalRefund(
-      JSON.stringify(sendData),
-      function(res) {
-        // alert('>>> refundAmt:' + JSON.parse(res).result.refundAmt);
-        scanQRcode.netTaxRefund = JSON.parse(res).result.refundAmt;
-      },
-      function() {}
-    );
+      const sendData = {
+        rows: []
+      };
+      scanQRcode.invoiceItems.forEach(function(item) {
+        sendData.rows.push(item);
+      });
+      External.TradevanKioskCommon.CommonService.CalRefund(
+        JSON.stringify(sendData),
+        function(res) {
+          // alert('>>> refundAmt:' + JSON.parse(res).result.refundAmt);
+          scanQRcode.netTaxRefund = JSON.parse(res).result.refundAmt;
+        },
+        function() {}
+      );
 
-    this.StartScanner();
+      // 2020 不用開啟
+      // this.StartScanner();
+      // 2020 focus 到隱藏輸入欄位
+      setTimeout(function() {
+        scanQRcode.focusScanData();
+      }, 1500);
+    } catch (e) {
+      alert('>>> help me' + JSON.stringify(e));
+    }
   },
   beforeDestroy: function() {
     kiosk.app.$data.invoiceItems = this.invoiceItems;
     kiosk.app.$data.invoiceNum = this.invoiceNum;
-    this.StopScanner();
+    // this.StopScanner();
   }
 });
 
