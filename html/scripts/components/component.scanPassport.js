@@ -42,7 +42,7 @@ Vue.component('component-scanPassport-main', {
         validationObj.result['sumIndateAmt'];
     },
     keepScanData: function() {
-      this.passportTimer = setInterval(this.getPassportData, 4000);
+      this.passportTimer = setInterval(this.getPassportData, 3000);
     },
     callImmigration: function(passportData) {
       const scanPassportObj = this;
