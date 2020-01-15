@@ -8,7 +8,8 @@ Vue.component('component-scanPermit-main', {
       scanCount: 0,
       fixedCount: 5,
       enterCounter: 0,
-      hiddenElRef: 'hiddenInput'
+      hiddenElRef: 'hiddenInput',
+      isLock: false
     };
   },
   methods: {
@@ -31,6 +32,7 @@ Vue.component('component-scanPermit-main', {
     validScanData: function() {
       let isValid = true;
       isValid = isValid && !!this.getScanData();
+      isValid = isValid && !isNaN(this.getScanData().trim());
       return isValid;
     },
     clearHiddenBarcode: function() {
@@ -41,76 +43,81 @@ Vue.component('component-scanPermit-main', {
       kiosk.API.goToNext(nextId);
     },
     getPermitData: function() {
-      this.scanCount++;
+      if (!this.isLock) {
+        this.isLock = true;
 
-      if (this.scanCount === this.fixedCount) {
-        kiosk.API.goToNext('error');
-        return;
-      }
+        this.scanCount++;
 
-      const scanPermit = this;
-      //查詢移民署
-      const postData = {
-        passportNo: this.getScanData(),
-        country: 'CN'
-      };
+        if (this.scanCount === this.fixedCount) {
+          kiosk.API.goToNext('error');
+          return;
+        }
 
-      External.TradevanKioskCommon.CommonService.CallImm(
-        JSON.stringify(postData),
-        function(res) {
-          const resObj = JSON.parse(res);
-          // alert(
-          //   '>>> 回傳資訊:' +
-          //     resObj.result['message'] +
-          //     '---' +
-          //     resObj.result['status']
-          // );
+        const scanPermit = this;
+        //查詢移民署
+        const postData = {
+          passportNo: this.getScanData(),
+          country: 'CN'
+        };
 
-          // succ
-          if (resObj && resObj.result['status'] === '000') {
-            // scanPassportObj.lock = true;
-
-            scanPermit.megCode = 'passportCerted';
-
-            // global data --- 儲存護照相關資訊
-            scanPermit.storeUserData(postData, resObj);
+        External.TradevanKioskCommon.CommonService.CallImm(
+          JSON.stringify(postData),
+          function(res) {
+            const resObj = JSON.parse(res);
             // alert(
-            //   '>>> 入境證旅客資訊:' + JSON.stringify(kiosk.app.$data.userData)
+            //   '>>> 回傳資訊:' +
+            //     resObj.result['message'] +
+            //     '---' +
+            //     resObj.result['status']
             // );
 
-            scanPermit.megCode = 'permitCerting';
-            setTimeout(function() {
-              scanPermit.megCode = 'permitCerted';
+            // succ
+            if (resObj && resObj.result['status'] === '000') {
+              // scanPassportObj.lock = true;
+
+              scanPermit.megCode = 'passportCerted';
+
+              // global data --- 儲存護照相關資訊
+              scanPermit.storeUserData(postData, resObj);
+              // alert(
+              //   '>>> 入境證旅客資訊:' + JSON.stringify(kiosk.app.$data.userData)
+              // );
+
+              scanPermit.megCode = 'permitCerting';
               setTimeout(function() {
-                if (scanPermit.varifyAmt()) {
-                  kiosk.API.goToNext(scanPermit.wording['toPreScanQR']);
-                } else {
-                  Swal.fire({
-                    type: 'warning',
-                    onClose: function() {
-                      kiosk.API.goToNext('mainMenu');
-                    },
-                    width: 600,
-                    html:
-                      '<h3>' +
-                      kiosk.wording[scanPermit.culture].scanPermit.amtErr +
-                      '</h3>'
-                  });
-                }
+                scanPermit.megCode = 'permitCerted';
+                setTimeout(function() {
+                  if (scanPermit.varifyAmt()) {
+                    kiosk.API.goToNext(scanPermit.wording['toPreScanQR']);
+                  } else {
+                    Swal.fire({
+                      type: 'warning',
+                      onClose: function() {
+                        kiosk.API.goToNext('mainMenu');
+                      },
+                      width: 600,
+                      html:
+                        '<h3>' +
+                        kiosk.wording[scanPermit.culture].scanPermit.amtErr +
+                        '</h3>'
+                    });
+                  }
+                }, 1000);
               }, 1000);
-            }, 1000);
-          } else {
-            Swal.fire({
-              type: 'error',
-              title: '糟糕...',
-              text: '移民署伺服器錯誤!',
-              footer: '<a href>請通知客服~</a>'
-            });
-            scanPermit.clearHiddenBarcode();
-          }
-        },
-        function() {}
-      );
+            } else {
+              Swal.fire({
+                type: 'error',
+                title: '糟糕...',
+                text: '移民署伺服器錯誤!',
+                footer: '<a href>請通知客服~</a>'
+              });
+              scanPermit.clearHiddenBarcode();
+              this.isLock = false;
+            }
+          },
+          function() {}
+        );
+      }
     },
     storeUserData: function(passportObj, validationObj) {
       kiosk.app.$data.userData['passportNo'] = passportObj['passportNo'].split(
