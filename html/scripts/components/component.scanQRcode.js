@@ -19,7 +19,8 @@ Vue.component('component-scanQRcode-main', {
       tempStr1: '',
       tempStr2: '',
       hiddenElRef: 'hiddenInput',
-      enterConter: 0
+      enterConter: 0,
+      timer: null
     };
   },
   methods: {
@@ -57,7 +58,7 @@ Vue.component('component-scanQRcode-main', {
       let key = event.keyCode || event.which;
 
       if (key === 13) {
-        if (scanQRcode.enterConter === 0) {
+        /* if (scanQRcode.enterConter === 0) {
           scanQRcode.tempStr1 = scanQRcode.getScanData();
         }
 
@@ -72,6 +73,28 @@ Vue.component('component-scanQRcode-main', {
           } catch (e) {
             alert(JSON.stringify(e));
           }
+        } */
+
+        let orgStr = scanQRcode.getScanData();
+        let tempArray = orgStr.split('**');
+
+        scanQRcode.tempStr1 = tempArray[tempArray.length - 1].trim();
+        scanQRcode.tempStr2 = orgStr.replace(scanQRcode.tempStr1, '').trim();
+
+        scanQRcode.tempStr2 =
+          scanQRcode.tempStr2.charAt(scanQRcode.tempStr2.length - 2) +
+            scanQRcode.tempStr2.charAt(scanQRcode.tempStr2.length - 1) ===
+          '**'
+            ? scanQRcode.tempStr2
+                .slice(0, scanQRcode.tempStr2.length - 2)
+                .trim()
+            : scanQRcode.tempStr2;
+
+        try {
+          scanQRcode.addInvItem(scanQRcode.generateInvoiceItems());
+          scanQRcode.clearHiddenBarcode();
+        } catch (e) {
+          alert(JSON.stringify(e));
         }
       }
     },
@@ -128,10 +151,10 @@ Vue.component('component-scanQRcode-main', {
       const invNo = invData.items[0].invNo;
       isValid = isValid && !this.isDup(invNo);
       isValid = isValid && this.isValidNo(invNo);
-      isValid =
-        isValid &&
-        invData.date ===
-          parseInt(moment(new Date()).format('YYYYMMDD') - 19110000);
+      // isValid =
+      //   isValid &&
+      //   invData.date ===
+      //     parseInt(moment(new Date()).format('YYYYMMDD') - 19110000);
       isValid = isValid && invData.sellerUniNum === '82901366';
       invData.isRefund = isValid ? 'Y' : 'N';
       return isValid;
@@ -630,9 +653,9 @@ Vue.component('component-scanQRcode-main', {
       // 2020 不用開啟
       // this.StartScanner();
       // 2020 focus 到隱藏輸入欄位
-      setTimeout(function() {
+      this.timer = setTimeout(function() {
         scanQRcode.focusScanData();
-      }, 1500);
+      }, 1000);
     } catch (e) {
       alert('>>> help me' + JSON.stringify(e));
     }
@@ -640,6 +663,7 @@ Vue.component('component-scanQRcode-main', {
   beforeDestroy: function() {
     kiosk.app.$data.invoiceItems = this.invoiceItems;
     kiosk.app.$data.invoiceNum = this.invoiceNum;
+    clearTimeout(this.timer);
     // this.StopScanner();
   }
 });
