@@ -126,17 +126,16 @@
       error: {
         errorTitle: '',
         errorTitle2:
-          'Please proceed to Tax Refund Center with your travel document and invoices issued by Taipei 101 for application, thank you!',
+          "Please proceed to the store's tax refund counter with your travel document and invoices for application, thank you!",
         toHomeText: 'Back to Homepage'
       },
       preScanQRcode: {
-        preScanQRcodeTitle:
-          'Prepare to scan your invoices issued by Taipei  101 Mall.',
+        preScanQRcodeTitle: 'Prepare to scan QR codes within the invoices.',
         btScanQRcode: 'Start',
         toScanQR: 'scanQRcode'
       },
       scanQRcode: {
-        scanQRcodeTitle1: 'Please scan barcode in your invoices.',
+        scanQRcodeTitle1: 'Please scan QR codes in your invoices.',
 
         scanQRcodeTitle2: 'Applied Tax Refund Amount Today ',
         scanQRcodeTitle4: ' ',
@@ -189,7 +188,7 @@
         successTitle1:
           'Your application form is being printed now, thank you for patience.',
         successTitle2:
-          'Please proceed to counter 2 of Customer Service Center for final document verification.',
+          "Please attain your refund and documents at the store's refund counter.",
         successTitle3:
           "Reminder! You won't be able to claim tax refund if application process is unncompleted.",
         successTitle4: '',
@@ -262,16 +261,16 @@
       error: {
         errorTitle: '',
         errorTitle2:
-          '請攜帶您的入境文件及發票至退稅櫃檯，將有專人為您服務，謝謝!',
+          '請攜帶您的入境文件及發票至商店退稅櫃檯，將有專人為您服務，謝謝!',
         toHomeText: '回服務首頁'
       },
       preScanQRcode: {
-        preScanQRcodeTitle: '準備掃描購物發票明細條碼',
+        preScanQRcodeTitle: '準備掃描購物發票QR Code',
         btScanQRcode: '開始掃描',
         toScanQR: 'scanQRcode'
       },
       scanQRcode: {
-        scanQRcodeTitle1: '請掃描您的購物發票明細條碼',
+        scanQRcodeTitle1: '請掃描您的購物發票QR Code',
 
         scanQRcodeTitle2: '您今日已辦理退稅',
         scanQRcodeTitle4: '元',
@@ -320,7 +319,7 @@
       },
       success: {
         successTitle1: '列印中，請稍後!',
-        successTitle2: '請至 2 號櫃檯查驗文件',
+        successTitle2: '請至商店中的退稅櫃檯領取文件與退稅',
         successTitle3: '未完成所有退稅手續會導致您無法領取稅金',
         successTitle4: '',
         toHomeText: '回服務首頁'
@@ -391,16 +390,16 @@
       error: {
         errorTitle: '',
         errorTitle2:
-          '请携带您的入境文件及发票至退税柜台，将有专人为您服务，谢谢!',
+          '请携带您的入境文件及发票至商店退税柜台，将有专人为您服务，谢谢!',
         toHomeText: '回服务首页'
       },
       preScanQRcode: {
-        preScanQRcodeTitle: '准备扫描购物发票明细条码',
+        preScanQRcodeTitle: '准备扫描购物发票二维码',
         btScanQRcode: '开始扫描',
         toScanQR: 'scanQRcode'
       },
       scanQRcode: {
-        scanQRcodeTitle1: '请扫描您的购物发票明细条码',
+        scanQRcodeTitle1: '请扫描您的购物发票二维码',
 
         scanQRcodeTitle2: '您今日已办理退税',
         scanQRcodeTitle4: '元',
@@ -449,7 +448,7 @@
       },
       success: {
         successTitle1: '列印中，请稍後!',
-        successTitle2: '请至 2 号柜台查验文件',
+        successTitle2: '请至商店中的退税柜台领取文件与退税',
         successTitle3: '未完成所有退税手续会导致您无法领取税金',
         successTitle4: '',
         toHomeText: '回服务首页'
@@ -587,7 +586,8 @@
       },
       success: {
         successTitle1: '印刷しています、しばらくお待ちください',
-        successTitle2: '2 番カウンターで資料の検査を行ってください',
+        successTitle2:
+          '特約店舗の税金還付受付カウンターにて証明文書と還付金を受け取ってください。',
         successTitle3:
           '税金還付手続きが全て完了していないと、税金の還付が受けられなくなります',
         successTitle4: '',
@@ -666,12 +666,12 @@
         toHomeText: '홈으로 돌아가기'
       },
       preScanQRcode: {
-        preScanQRcodeTitle: '쇼핑 영수증 명세 바코드 스캔 준비',
+        preScanQRcodeTitle: '쇼핑 영수증 명세 QR 코드 스캔 준비',
         btScanQRcode: '스캔 시작',
         toScanQR: 'scanQRcode'
       },
       scanQRcode: {
-        scanQRcodeTitle1: '쇼핑 영수증 명세 바코드를 스캔하세요',
+        scanQRcodeTitle1: '쇼핑 영수증 명세 QR 코드 스캔하세요',
 
         scanQRcodeTitle2: '금일 NT$ ',
         scanQRcodeTitle4: '이 환급 처리되었습니다',
@@ -722,7 +722,8 @@
       },
       success: {
         successTitle1: '인쇄 중, 잠시만 기다려 주세요!',
-        successTitle2: '2 번 카운터에서 서류를 확인하세요',
+        successTitle2:
+          '특약점 세금환급 서비스 데스크에서 증빙 서류와 관련 환급세액을 받습니다.',
         successTitle3:
           '모든 세금환급 절차가 아직 완료되지 않아 환급금을 수령할 수 없습니다.',
         successTitle4: '',
