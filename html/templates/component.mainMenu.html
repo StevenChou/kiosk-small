@@ -1,8 +1,8 @@
 <!--Common �h�y�t���-->
 <script type="text/x-template" id="template-navbar-common-culture">
-    <div class="row">
+    <div class="row" style="">
     <div class="col-xs-12" style="margin-top: 30px;">
-      <table style="background-color: #eee;width:90%; margin-left: 100px;">
+      <table style="background-color: #fffaee;width:90%; margin-left: 100px;">
         <tr v-for="(row,index) in rows" >
             <td v-for="(button,index) in row" >
                 <div @click="handleMouseDown(button.next),changeCulture(button.culture)" class="logoImg">
@@ -17,8 +17,8 @@
 
 <script type="text/x-template" id="template-mainMenu-main">
   <div class="container-fluid">
-      <div class="mgT70-mid"></div>
-      <div class="col-xs-12" style="margin-top: 30px;">
+      <div class="mgT70-mid"><img class="imgHW" src="img/logo.png"></div>
+      <div class="col-xs-12" style="margin-top: 10px;">
           <div class="text-title text-mid" style="font-family:華康儷中黑;">{{wording.mainMenuTitle1}}</div>
           <div class="text-subTitle text-mid" style="font-family:Myriad Web Pro;">{{wording.mainMenuTitle2}}<br>{{wording.mainMenuTitle3}}</div>
       </div>
