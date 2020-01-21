@@ -58,12 +58,12 @@ Vue.component('component-scanPassport-main', {
           function(res) {
             //alert('>>> json string:' + res);
             const resObj = JSON.parse(res);
-            alert(
-              '>>> 移民署回傳資訊:' +
-                resObj.result['message'] +
-                '---' +
-                resObj.result['status']
-            );
+            // alert(
+            //   '>>> 移民署回傳資訊:' +
+            //     resObj.result['message'] +
+            //     '---' +
+            //     resObj.result['status']
+            // );
 
             // succ
             if (resObj && resObj.result['status'] === '000') {
@@ -148,23 +148,28 @@ Vue.component('component-scanPassport-main', {
                   cb();
                 }
 
-                alert('>>>???keep 無法解析，重新呼叫取資料 API');
+                Swal.fire({
+                  type: 'warning',
+                  width: 600,
+                  html: '<h3>' + '護照資料無法解析，請重新放置護照' + '</h3>'
+                });
               }
             } catch (err) {
               scanPassportObj.lockBlock = false;
-              alert(
-                '>>>##keep err:' +
-                  err +
-                  ' --- ' +
-                  '無法解析，重新呼叫取資料 API'
-              );
+
+              Swal.fire({
+                type: 'warning',
+                width: 600,
+                html: '<h3>' + '護照資料錯誤，請重新放置護照' + '</h3>'
+              });
+
               if (cb) {
                 cb();
               }
             }
           },
           function(res) {
-            alert('>>>$$keep error:' + JSON.stringify(res));
+            // alert('>>>$$keep error:' + JSON.stringify(res));
           }
         );
       }
@@ -188,7 +193,7 @@ Vue.component('component-scanPassport-main', {
     stopPassportScan: function() {
       kiosk.API.Device.WFX.stopGet(
         function(res) {
-          alert('>>> closed scan passport:' + JSON.stringify(res));
+          // alert('>>> closed scan passport:' + JSON.stringify(res));
         },
         function() {}
       );
