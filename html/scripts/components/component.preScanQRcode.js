@@ -32,6 +32,26 @@ Vue.component('component-preScanQRcode-main', {
         fontSize: fontSize + 'px',
         marginTop: '20px'
       };
+    },
+    imgURL: function() {
+      let url = 'img/';
+      switch (this.culture) {
+        case 1:
+          url += 'Invoice-EN.gif';
+          break;
+        case 2:
+          url += 'Invoice-TC.gif';
+          break;
+        case 13:
+          url += 'Invoice-SC.gif';
+          break;
+        case 3:
+          url += 'Invoice-JP.gif';
+          break;
+        default:
+          url += 'Invoice-KR.gif';
+      }
+      return url;
     }
   }
 });

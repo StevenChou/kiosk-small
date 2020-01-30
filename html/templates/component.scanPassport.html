@@ -11,7 +11,7 @@
             <div v-html="infoData"></div>
         </div>
         <!-- <img class="imgPassportSample" src="img/passport_sample.jpg" @click.stop.prevent="" @mousedown="handleMouseDown(wording.toPreScanQR)"> -->
-        <img class="imgPassportSample" src="img/passport_sample.jpg" @click.stop.prevent="">
+        <img class="imgPassportSample" :src="[imgURL]" @click.stop.prevent="">
         <!-- <img class="imgPassportSample" src="img/passport_sample.jpg" @click.stop.prevent=""> -->
   </div>
 </script>

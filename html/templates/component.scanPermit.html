@@ -1,5 +1,5 @@
 <script type="text/x-template" id="template-scanPermit-main">
-  <div class="container" :style="[cultureFontStyle]">
+  <div id="scanPermitArea" class="container" :style="[cultureFontStyle]">
       <div class="col-xs-12">
           <div class="text-title text-mid mgT30" :style="[btnSize]">{{wording.scanPermitTitle}}</div>
       </div>
@@ -31,10 +31,10 @@
           <div v-html="infoData"></div>
       </div>
       <!-- <img class="imgPassportSample" src="img/scanPermit.png" @mousedown="handleMouseDown(wording.toPreScanQR)"> -->
-      <img class="imgPassportSample" src="img/scanPermit.jpg">
+      <img class="imgPassportSample" :src="[imgURL]"">
 
-      <input  type="text" class="hiddenFocus no-outline" style="background-color: #eee;position: fixed;bottom: 0px;left: 0px;"
-        ref="hiddenInput" @keyup="handleKeyUp">
+      <input id="spcInp" type="text" class="hiddenFocus no-outline" style="background-color: #eee;position: fixed;bottom: 0px;left: 0px;"
+        ref="hiddenInput" @keyup="handleKeyUp" @blur="keepFocusing">
       <!-- <button @click="showBarcode">hihi</button> -->
   </div>
 </script>

@@ -9,7 +9,8 @@ Vue.component('component-scanPermit-main', {
       fixedCount: 5,
       enterCounter: 0,
       hiddenElRef: 'hiddenInput',
-      isLock: false
+      isLock: false,
+      timer: null
     };
   },
   methods: {
@@ -40,6 +41,7 @@ Vue.component('component-scanPermit-main', {
       this.focusScanData();
     },
     handleMouseDown: function(nextId) {
+      this.isLock = true;
       kiosk.API.goToNext(nextId);
     },
     getPermitData: function() {
@@ -154,6 +156,14 @@ Vue.component('component-scanPermit-main', {
         isValid &&
         parseFloat(kiosk.app.$data.userData['yearAmtTotal']) < 240000;
       return isValid;
+    },
+    keepFocusing: function() {
+      const scanPermitObj = this;
+
+      if (!scanPermitObj.isLock) {
+        scanPermitObj.focusScanData();
+        scanPermitObj.$refs.hiddenInput.click();
+      }
     }
   },
   computed: {
@@ -186,15 +196,47 @@ Vue.component('component-scanPermit-main', {
     },
     cultureFontStyle: function() {
       return kiosk.app.changeFontFamily(this.culture);
+    },
+    imgURL: function() {
+      let url = 'img/';
+      switch (this.culture) {
+        case 1:
+          url += 'Permit-EN.gif';
+          break;
+        case 2:
+          url += 'Permit-TC.gif';
+          break;
+        case 13:
+          url += 'Permit-SC.gif';
+          break;
+        case 3:
+          url += 'Permit-JP.gif';
+          break;
+        default:
+          url += 'Permit-KR.gif';
+      }
+      return url;
     }
   },
   mounted: function() {
     const scanPermitObj = this;
-    setTimeout(function() {
-      scanPermitObj.focusScanData();
-    }, 1000);
+
+    scanPermitObj.timer = setTimeout(function() {
+      if (scanPermitObj.$refs.hiddenInput.value === '') {
+        //scanPermitObj.focusScanData();
+        scanPermitObj.$refs.hiddenInput.focus();
+      }
+    }, 1500);
+
+    document.getElementById('spcInp').addEventListener('focusout', function() {
+      //alert('ttt1');
+      scanPermitObj.$refs.hiddenInput.focus();
+    });
   },
-  beforeDestroy: function() {},
+  beforeDestroy: function() {
+    // clearInterval(this.timer);
+    clearTimeout(this.timer);
+  },
   created: function() {
     kiosk.app.clearUserData();
   }

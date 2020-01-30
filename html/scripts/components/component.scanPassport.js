@@ -223,6 +223,26 @@ Vue.component('component-scanPassport-main', {
             fontSize: fontSize + 'px'
           }
         : {};
+    },
+    imgURL: function() {
+      let url = 'img/';
+      switch (this.culture) {
+        case 1:
+          url += 'Passport-EN.gif';
+          break;
+        case 2:
+          url += 'Passport-TC.gif';
+          break;
+        case 13:
+          url += 'Passport-SC.gif';
+          break;
+        case 3:
+          url += 'Passport-JP.gif';
+          break;
+        default:
+          url += 'Passport-KR.gif';
+      }
+      return url;
     }
   },
   mounted: function() {
