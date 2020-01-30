@@ -48,8 +48,8 @@
 }
 
 .imgPrinter {
-  width: 20%;
-  height: 20%;
+  width: 30%;
+  height: 30%;
   margin-left: 450px;
   margin-top: 50px;
 }
@@ -101,9 +101,15 @@
   margin-top: 10px;
 }
 
-.imgHW {
-  width: 13%;
-  height: 13%;
+.imgHW1 {
+  width: 7%;
+  height: 7%;
+  /* width:348px;
+    height:128px; */
+}
+.imgHW2 {
+  width: 17%;
+  height: 17%;
   /* width:348px;
     height:128px; */
 }
