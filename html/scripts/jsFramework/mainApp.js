@@ -361,7 +361,8 @@ var kiosk = kiosk || {};
         invoiceItems: [],
         invoiceNum: [],
         lockBtn: false,
-        userData: {}
+        userData: {},
+        passportBlock: false
       },
       methods: {
         updateNav: function(componentName, conponentModel) {

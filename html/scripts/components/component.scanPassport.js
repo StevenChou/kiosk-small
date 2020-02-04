@@ -12,7 +12,8 @@ Vue.component('component-scanPassport-main', {
       isGet: false,
       openTimer: null,
       passportTimer: null,
-      lockBlock: false
+      lockBlock: false,
+      count: 0
     };
   },
   methods: {
@@ -117,15 +118,20 @@ Vue.component('component-scanPassport-main', {
     },
     getPassportData: function(cb) {
       const scanPassportObj = this;
+      // 打開 cb method
+      kiosk.app.$data.passportBlock = false;
 
       if (scanPassportObj.isGet) {
-        return clearInterval(scanPassportObj.passportTimer);
+        clearInterval(scanPassportObj.passportTimer);
+        return;
       }
-
+      // alert('>>>[檢查機制] timer 未關閉！！');
       if (!scanPassportObj.lockBlock) {
+        scanPassportObj.lockBlock = true;
         // 護照掃描中...
         scanPassportObj.megCode = 'scanPassportLoading';
-        scanPassportObj.lockBlock = true;
+        // alert('>>>[檢查機制] count:' + ++this.count);
+
         kiosk.API.Device.WFX.getData(
           function(res) {
             try {
@@ -143,28 +149,42 @@ Vue.component('component-scanPassport-main', {
                 //查詢移民署
                 scanPassportObj.callImmigration(passportData);
               } else {
-                scanPassportObj.lockBlock = false;
-                if (cb) {
-                  cb();
+                if (!kiosk.app.$data.passportBlock) {
+                  // alert('>>>[檢查機制] key1:' + kiosk.app.$data.passportBlock);
+                  scanPassportObj.lockBlock = false;
+                  if (cb) {
+                    cb();
+                  }
+
+                  Swal.fire({
+                    type: 'warning',
+                    width: 600,
+                    html:
+                      '<h3>' +
+                      kiosk.wording[scanPassportObj.culture].scanPassport
+                        .errMeg1 +
+                      '</h3>'
+                  });
                 }
+              }
+            } catch (err) {
+              if (!kiosk.app.$data.passportBlock) {
+                // alert('>>>[檢查機制] key2:' + kiosk.app.$data.passportBlock);
+                scanPassportObj.lockBlock = false;
 
                 Swal.fire({
                   type: 'warning',
                   width: 600,
-                  html: '<h3>' + '護照資料無法解析，請重新放置護照' + '</h3>'
+                  html:
+                    '<h3>' +
+                    kiosk.wording[scanPassportObj.culture].scanPassport
+                      .errMeg2 +
+                    '</h3>'
                 });
-              }
-            } catch (err) {
-              scanPassportObj.lockBlock = false;
 
-              Swal.fire({
-                type: 'warning',
-                width: 600,
-                html: '<h3>' + '護照資料錯誤，請重新放置護照' + '</h3>'
-              });
-
-              if (cb) {
-                cb();
+                if (cb) {
+                  cb();
+                }
               }
             }
           },
@@ -188,7 +208,14 @@ Vue.component('component-scanPassport-main', {
       return isValid;
     },
     startPassportScan: function() {
-      this.getPassportData(this.keepScanData);
+      const scanPassportObj = this;
+      kiosk.API.Device.WFX.stopGet(
+        function(res) {
+          // alert('>>> closed first scan passport:' + JSON.stringify(res));
+          scanPassportObj.getPassportData(scanPassportObj.keepScanData);
+        },
+        function() {}
+      );
     },
     stopPassportScan: function() {
       kiosk.API.Device.WFX.stopGet(
@@ -249,6 +276,7 @@ Vue.component('component-scanPassport-main', {
     this.startPassportScan();
   },
   beforeDestroy: function() {
+    clearInterval(this.passportTimer);
     // alert('釋放資源!!');
     this.stopPassportScan();
     //clearInterval(this.myInterval);
@@ -278,9 +306,11 @@ Vue.component('component-scanPassport-navBar', {
   },
   methods: {
     backBtn: function() {
+      kiosk.app.$data.passportBlock = true;
       kiosk.API.goToNext('selectDoc');
     },
     goHome: function() {
+      kiosk.app.$data.passportBlock = true;
       kiosk.API.goToNext('mainMenu');
     }
   },
