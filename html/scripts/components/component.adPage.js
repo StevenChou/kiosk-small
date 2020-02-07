@@ -5,13 +5,13 @@ Vue.component('component-closingPage-main', {
     return {
       activeLang: this.culture,
       openingTimeList: {
-        Sunday: { openingTime: '11:00:00' },
-        Monday: { openingTime: '11:00:00' },
-        Tuesday: { openingTime: '11:00:00' },
-        Wednesday: { openingTime: '11:00:00' },
-        Thursday: { openingTime: '11:00:00' },
-        Friday: { openingTime: '11:00:00' },
-        Saturday: { openingTime: '11:00:00' }
+        Sunday: { openingTime: '08:00:00' },
+        Monday: { openingTime: '08:00:00' },
+        Tuesday: { openingTime: '08:00:00' },
+        Wednesday: { openingTime: '08:00:00' },
+        Thursday: { openingTime: '08:00:00' },
+        Friday: { openingTime: '08:00:00' },
+        Saturday: { openingTime: '08:00:00' }
       },
       openingTimer: null
     };
@@ -70,6 +70,9 @@ Vue.component('component-closingPage-main', {
         if (
           moment(curDateTime[0] + ' ' + curTime).isAfter(
             dayInfo[0] + ' ' + baseTime
+          ) &&
+          moment(curDateTime[0] + ' ' + curTime).isBefore(
+            dayInfo[0] + ' 07:52:00'
           )
         ) {
           clearInterval(closingPageObj.openingTimer);

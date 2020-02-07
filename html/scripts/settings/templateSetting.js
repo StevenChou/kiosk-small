@@ -19,5 +19,5 @@ var kioskTemplates = [
   'component.success',
   'component.keyboard',
   'component.admin',
-  'component.closingPage'
+  'component.adPage'
 ];

@@ -2,7 +2,7 @@
   '1': {
     // 首頁選擇國語言
     mainMenu: {},
-    closingPage: {},
+    adPage: {},
     // 提醒頁
     remind: {
       navBar: {}
@@ -111,7 +111,7 @@
   '2': {
     // 首頁選擇國語言
     mainMenu: {},
-    closingPage: {},
+    adPage: {},
     // 提醒頁
     remind: {
       navBar: {}
@@ -328,7 +328,7 @@
   '3': {
     // 首頁選擇國語言
     mainMenu: {},
-    closingPage: {},
+    adPage: {},
     // 提醒頁
     remind: {
       navBar: {}
@@ -437,7 +437,7 @@
   '4': {
     // 首頁選擇國語言
     mainMenu: {},
-    closingPage: {},
+    adPage: {},
     // 提醒頁
     remind: {
       navBar: {}
