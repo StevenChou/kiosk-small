@@ -107,7 +107,9 @@
         passportCerted:
           '<div style="margin-top: 10px;">Verification success</div>',
         amtErr:
-          'Please proceed to Tax Refund Center,  we will help you apply for tax refund. You will collect refund at airports / ports before departure.'
+          'Please proceed to Tax Refund Center,  we will help you apply for tax refund. You will collect refund at airports / ports before departure.',
+        errMeg1: "We can't analyze the passport, please scan again!",
+        errMeg2: 'Passport data error, please scan again!'
       },
       scanPermit: {
         scanPermitTitle: 'Please scan barcode of your exit & entry permit.',
@@ -244,7 +246,9 @@
           '資料驗證中<div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div>',
         passportCerted: '<div style="margin-top: 10px;">驗證成功</div>',
         amtErr:
-          '請前往退稅服務中心，我們將為您辦理大額退稅，您將於離境時領取退稅。'
+          '請前往退稅服務中心，我們將為您辦理大額退稅，您將於離境時領取退稅。',
+        errMeg1: '護照資料無法解析，請重新放置護照',
+        errMeg2: '護照資料錯誤，請重新放置護照'
       },
       scanPermit: {
         scanPermitTitle: '請掃描您的入境證條碼',
@@ -373,7 +377,9 @@
           '资料验证中<div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div>',
         passportCerted: '<div style="margin-top: 10px;">验证成功</div>',
         amtErr:
-          '请前往退税服务中心，我们将为您办理大额退税，您将於离境时领取退税。'
+          '请前往退税服务中心，我们将为您办理大额退税，您将於离境时领取退税。',
+        errMeg1: '护照资料无法解析，请重新放置护照',
+        errMeg2: '护照资料错误，请重新放置护照'
       },
       scanPermit: {
         scanPermitTitle: '请扫描您的入境证条码',
@@ -505,7 +511,9 @@
           'データを検証中<div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div>',
         passportCerted: '<div style="margin-top: 10px;">検証成功</div>',
         amtErr:
-          '税還付サービスセンターにお越しください。我々がお客様のために多額の税還付手続きを行いますので、お客様は出国時に税還付金をお受け取りになれます。'
+          '税還付サービスセンターにお越しください。我々がお客様のために多額の税還付手続きを行いますので、お客様は出国時に税還付金をお受け取りになれます。',
+        errMeg1: "We can't analyze the passport, please scan again!",
+        errMeg2: 'Passport data error, please scan again!'
       },
       scanPermit: {
         scanPermitTitle: '台湾出入国許可証のバーコードをスキャンしてください',
@@ -644,7 +652,9 @@
           '정보 인증 중<div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div>',
         passportCerted: '<div style="margin-top: 10px;">인증 성공</div>',
         amtErr:
-          '세금환급 서비스 센터로 가시면 귀하를 위해 고액 세금환급 처리를 도와드리겠습니다. 환급액은 출국 시에 수령하실 수 있습니다.'
+          '세금환급 서비스 센터로 가시면 귀하를 위해 고액 세금환급 처리를 도와드리겠습니다. 환급액은 출국 시에 수령하실 수 있습니다.',
+        errMeg1: "We can't analyze the passport, please scan again!",
+        errMeg2: 'Passport data error, please scan again!'
       },
       scanPermit: {
         scanPermitTitle: '타이완 입국증 바코드를 스캔하세요',
