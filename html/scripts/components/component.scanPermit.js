@@ -228,14 +228,17 @@ Vue.component('component-scanPermit-main', {
       }
     }, 1500);
 
-    document.getElementById('spcInp').addEventListener('focusout', function() {
-      //alert('ttt1');
-      scanPermitObj.$refs.hiddenInput.focus();
-    });
+    // 會不會造成記憶體遺失？？
+    document
+      .getElementById('spcInp')
+      .addEventListener('focusout', scanPermitObj.focusScanData);
   },
   beforeDestroy: function() {
     // clearInterval(this.timer);
     clearTimeout(this.timer);
+    document
+      .getElementById('spcInp')
+      .removeEventListener('focusout', this.focusScanData);
   },
   created: function() {
     kiosk.app.clearUserData();
