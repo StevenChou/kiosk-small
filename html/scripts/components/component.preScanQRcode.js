@@ -28,6 +28,8 @@ Vue.component('component-preScanQRcode-main', {
       switch (this.culture) {
         case 1:
         case 3:
+          fontSize = 36;
+          break;
         case 13:
         case 4:
         case 2:
