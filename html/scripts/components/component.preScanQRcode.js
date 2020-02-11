@@ -6,7 +6,13 @@ Vue.component('component-preScanQRcode-main', {
   methods: {
     // Btn Click
     handleMouseDown: function(nextId) {
-      kiosk.API.goToNext(nextId);
+      kiosk.API.Device.WFX.stopGet(
+        function(res) {
+          // alert('>>> closed scan passport:' + JSON.stringify(res));
+          kiosk.API.goToNext(nextId);
+        },
+        function() {}
+      );
     }
   },
 
