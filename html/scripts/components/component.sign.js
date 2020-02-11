@@ -131,6 +131,7 @@ Vue.component('component-sign-main', {
 
     var canvasWidth = 980;
     var canvasHeight = 320;
+
     document.addEventListener('touchmove', this.onDocumentTouchMove, false);
 
     this.point.notFirst = false;
@@ -210,5 +211,6 @@ Vue.component('component-sign-main', {
   created: function() {},
   destroyed: function() {
     clearInterval(this.myInterval);
+    document.removeEventListener('touchmove', this.onDocumentTouchMove, false);
   }
 });
