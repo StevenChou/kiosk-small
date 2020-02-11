@@ -147,14 +147,19 @@ Vue.component('component-scanQRcode-main', {
       return invData;
     },
     checkRefund: function(invData) {
+      // for testing
+      // invData.date = '1090211';
+
       let isValid = true;
       const invNo = invData.items[0].invNo;
       isValid = isValid && !this.isDup(invNo);
       isValid = isValid && this.isValidNo(invNo);
-      // isValid =
-      //   isValid &&
-      //   invData.date ===
-      //     parseInt(moment(new Date()).format('YYYYMMDD') - 19110000);
+      isValid =
+        isValid &&
+        invData.date ===
+          (
+            parseInt(moment(new Date()).format('YYYYMMDD')) - 19110000
+          ).toString();
       isValid = isValid && invData.sellerUniNum === '82901366';
       invData.isRefund = isValid ? 'Y' : 'N';
       return isValid;
