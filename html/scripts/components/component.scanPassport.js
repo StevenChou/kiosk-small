@@ -78,7 +78,7 @@ Vue.component('component-scanPassport-main', {
                 if (scanPassportObj.varifyAmt()) {
                   setTimeout(function() {
                     kiosk.API.goToNext(scanPassportObj.wording['toPreScanQR']);
-                  }, 1500);
+                  }, 500);
                 } else {
                   Swal.fire({
                     type: 'warning',
@@ -91,7 +91,8 @@ Vue.component('component-scanPassport-main', {
                       '<h3>' +
                       kiosk.wording[scanPassportObj.culture].scanPassport
                         .amtErr +
-                      '</h3>'
+                      '</h3>',
+                    showConfirmButton: false
                     // footer: '<a href>請通知客服~</a>'
                   });
                 }
@@ -160,10 +161,11 @@ Vue.component('component-scanPassport-main', {
                     type: 'warning',
                     width: 600,
                     html:
-                      '<h3>' +
+                      '<h3 style="margin-bottom: 40px;">' +
                       kiosk.wording[scanPassportObj.culture].scanPassport
                         .errMeg1 +
-                      '</h3>'
+                      '</h3>',
+                    showConfirmButton: false
                   });
                 }
               }
@@ -176,10 +178,11 @@ Vue.component('component-scanPassport-main', {
                   type: 'warning',
                   width: 600,
                   html:
-                    '<h3>' +
+                    '<h3 style="margin-bottom: 40px;">' +
                     kiosk.wording[scanPassportObj.culture].scanPassport
                       .errMeg2 +
-                    '</h3>'
+                    '</h3>',
+                  showConfirmButton: false
                 });
 
                 if (cb) {

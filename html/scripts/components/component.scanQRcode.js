@@ -221,6 +221,7 @@ Vue.component('component-scanQRcode-main', {
           // alert('>>> data.applyMainList[0]:' + data.applyMainList[0].unvNo);
 
           Swal.fire({
+            width: 500,
             title:
               '<span style="font-size: 24px;">' +
               kiosk.wording[this.culture].scanQRcode.dataProcess +
@@ -256,13 +257,21 @@ Vue.component('component-scanQRcode-main', {
 
                 Swal.fire({
                   type: 'error',
-                  title: '糟糕...',
-                  text:
-                    '>>> 回傳資訊:' +
+                  width: 500,
+                  title:
+                    '<span style="font-size: 27px;">' + '糟糕...' + '</span>',
+                  html:
+                    '<span style="font-size: 24px; font-weight:bold;">' +
+                    '回傳資訊:' +
                     resObj.result['message'] +
                     '---' +
-                    resObj.result['status'],
-                  footer: '<a href>請通知客服~</a>'
+                    resObj.result['status'] +
+                    '</span>',
+                  footer:
+                    '<span style="font-size: 24px; color: red; font-weight:bold;">' +
+                    '請通知客服' +
+                    '</span>',
+                  showConfirmButton: false
                 });
                 // 這邊要改阿
                 // for testing  之後要刪掉!!
@@ -319,9 +328,17 @@ Vue.component('component-scanQRcode-main', {
           kiosk.API.log.logInfo('>>> 錯誤紀錄:' + JSON.stringify(err));
           Swal.fire({
             type: 'error',
-            title: '糟糕...',
-            text: '伺服器錯誤!',
-            footer: '<a href>請通知客服~</a>'
+            width: 500,
+            title: '<span style="font-size: 27px;">' + '糟糕...' + '</span>',
+            html:
+              '<span style="font-size: 24px; font-weight:bold;">' +
+              '伺服器錯誤!' +
+              '</span>',
+            footer:
+              '<span style="font-size: 24px; color: red; font-weight:bold;">' +
+              '請通知客服' +
+              '</span>',
+            showConfirmButton: false
           });
         })
         .finally(function() {
@@ -393,13 +410,15 @@ Vue.component('component-scanQRcode-main', {
         if (scanQRcode.megCode !== 'scanQRErrorDup') {
           Swal.fire({
             type: 'warning',
+            width: 500,
             html:
               '<h3>' +
               kiosk.wording[this.culture].scanQRcode.scanQRError3 +
               '</h3>' +
               '<h3>' +
               kiosk.wording[this.culture].scanQRcode.scanQRError4 +
-              '</h3>'
+              '</h3>',
+            showConfirmButton: false
           });
         }
 
@@ -417,11 +436,12 @@ Vue.component('component-scanQRcode-main', {
         Swal.fire({
           type: 'warning',
           onClose: function() {},
-          width: 600,
+          width: 500,
           html:
             '<h3>' +
             kiosk.wording[scanQRcode.culture].scanQRcode.amtErr +
-            '</h3>'
+            '</h3>',
+          showConfirmButton: false
         });
 
         return;
