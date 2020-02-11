@@ -101,7 +101,8 @@ Vue.component('component-scanPermit-main', {
                       html:
                         '<h3>' +
                         kiosk.wording[scanPermit.culture].scanPermit.amtErr +
-                        '</h3>'
+                        '</h3>',
+                      showConfirmButton: false
                     });
                   }
                 }, 1000);
@@ -109,9 +110,17 @@ Vue.component('component-scanPermit-main', {
             } else {
               Swal.fire({
                 type: 'error',
-                title: '糟糕...',
-                text: '移民署伺服器錯誤!',
-                footer: '<a href>請通知客服~</a>'
+                title:
+                  '<span style="font-size: 27px;">' + '糟糕...' + '</span>',
+                html:
+                  '<span style="font-size: 24px; font-weight:bold;">' +
+                  '移民署伺服器錯誤!' +
+                  '</span>',
+                footer:
+                  '<span style="font-size: 24px; color: red; font-weight:bold;">' +
+                  '請通知客服' +
+                  '</span>',
+                showConfirmButton: false
               });
               scanPermit.clearHiddenBarcode();
               this.isLock = false;
