@@ -12,6 +12,7 @@ Vue.component('component-scanPassport-main', {
       isGet: false,
       openTimer: null,
       passportTimer: null,
+      timer1: null,
       lockBlock: false,
       count: 0
     };
@@ -76,7 +77,7 @@ Vue.component('component-scanPassport-main', {
                 scanPassportObj.storeUserData(passportData, resObj);
 
                 if (scanPassportObj.varifyAmt()) {
-                  setTimeout(function() {
+                  scanPassportObj.timer1 = setTimeout(function() {
                     kiosk.API.goToNext(scanPassportObj.wording['toPreScanQR']);
                   }, 500);
                 } else {
@@ -280,6 +281,7 @@ Vue.component('component-scanPassport-main', {
   },
   beforeDestroy: function() {
     clearInterval(this.passportTimer);
+    clearInterval(this.timer1);
     // alert('釋放資源!!');
     this.stopPassportScan();
     //clearInterval(this.myInterval);

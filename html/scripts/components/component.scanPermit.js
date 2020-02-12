@@ -11,7 +11,9 @@ Vue.component('component-scanPermit-main', {
       hiddenElRef: 'hiddenInput',
       isLock: false,
       timer: null,
-      timer2: null
+      timer2: null,
+      timer3: null,
+      timer4: null
     };
   },
   methods: {
@@ -87,9 +89,9 @@ Vue.component('component-scanPermit-main', {
               // );
 
               scanPermit.megCode = 'permitCerting';
-              setTimeout(function() {
+              scanPermit.timer3 = setTimeout(function() {
                 scanPermit.megCode = 'permitCerted';
-                setTimeout(function() {
+                scanPermit.timer4 = setTimeout(function() {
                   if (scanPermit.varifyAmt()) {
                     kiosk.API.goToNext(scanPermit.wording['toPreScanQR']);
                   } else {
@@ -250,6 +252,8 @@ Vue.component('component-scanPermit-main', {
     // clearInterval(this.timer);
     clearTimeout(this.timer);
     clearTimeout(this.timer2);
+    clearTimeout(this.timer3);
+    clearTimeout(this.timer4);
     // document
     //   .getElementById('spcInp')
     //   .removeEventListener('focusout', this.focusScanData);
