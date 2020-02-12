@@ -64,6 +64,6 @@
               </td>
           </tr>
      <input  type="text" class="hiddenFocus no-outline" style="background-color: #eee;position: fixed;bottom: 0px;left: 0px;"
-        ref="hiddenInput" @keyup="handleKeyUp">
+        ref="hiddenInput" @keyup="handleKeyUp" @blur="keepFocusing">
   </div>
 </script>

@@ -20,7 +20,8 @@ Vue.component('component-scanQRcode-main', {
       tempStr2: '',
       hiddenElRef: 'hiddenInput',
       enterConter: 0,
-      timer: null
+      timer: null,
+      timer2: null
     };
   },
   methods: {
@@ -149,6 +150,7 @@ Vue.component('component-scanQRcode-main', {
     checkRefund: function(invData) {
       // for testing
       // invData.date = '1090211';
+      // invData.sellerUniNum = '82901366';
 
       let isValid = true;
       const invNo = invData.items[0].invNo;
@@ -587,6 +589,15 @@ Vue.component('component-scanQRcode-main', {
       };
 
       this.addInvItem(mockResData, 'UA95234159');
+    },
+    keepFocusing: function() {
+      const scanQRcodeObj = this;
+
+      if (!scanQRcodeObj.isLock) {
+        scanQRcodeObj.timer2 = setTimeout(function() {
+          scanQRcodeObj.focusScanData();
+        }, 1000);
+      }
     }
   },
   computed: {
@@ -689,6 +700,7 @@ Vue.component('component-scanQRcode-main', {
     kiosk.app.$data.invoiceItems = this.invoiceItems;
     kiosk.app.$data.invoiceNum = this.invoiceNum;
     clearTimeout(this.timer);
+    clearTimeout(this.timer2);
     // this.StopScanner();
   }
 });
