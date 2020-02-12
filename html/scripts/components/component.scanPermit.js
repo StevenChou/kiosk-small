@@ -10,7 +10,8 @@ Vue.component('component-scanPermit-main', {
       enterCounter: 0,
       hiddenElRef: 'hiddenInput',
       isLock: false,
-      timer: null
+      timer: null,
+      timer2: null
     };
   },
   methods: {
@@ -168,10 +169,13 @@ Vue.component('component-scanPermit-main', {
     },
     keepFocusing: function() {
       const scanPermitObj = this;
-
+      // alert('請於下方掃描入台證');
       if (!scanPermitObj.isLock) {
-        scanPermitObj.focusScanData();
-        scanPermitObj.$refs.hiddenInput.click();
+        scanPermitObj.timer2 = setTimeout(function() {
+          scanPermitObj.focusScanData();
+        }, 1000);
+
+        // scanPermitObj.$refs.hiddenInput.click();
       }
     }
   },
@@ -235,19 +239,20 @@ Vue.component('component-scanPermit-main', {
         //scanPermitObj.focusScanData();
         scanPermitObj.$refs.hiddenInput.focus();
       }
-    }, 1500);
+    }, 1000);
 
     // 會不會造成記憶體遺失？？
-    document
-      .getElementById('spcInp')
-      .addEventListener('focusout', scanPermitObj.focusScanData);
+    // document
+    //   .getElementById('spcInp')
+    //   .addEventListener('focusout', scanPermitObj.focusScanData);
   },
   beforeDestroy: function() {
     // clearInterval(this.timer);
     clearTimeout(this.timer);
-    document
-      .getElementById('spcInp')
-      .removeEventListener('focusout', this.focusScanData);
+    clearTimeout(this.timer2);
+    // document
+    //   .getElementById('spcInp')
+    //   .removeEventListener('focusout', this.focusScanData);
   },
   created: function() {
     kiosk.app.clearUserData();
