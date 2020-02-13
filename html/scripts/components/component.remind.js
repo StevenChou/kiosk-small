@@ -40,6 +40,20 @@ Vue.component('component-remind-main', {
             fontSize: fontSize + 'px'
           };
     },
+    wordingSize: function() {
+      let fontSize = null;
+      switch (this.culture) {
+        case 1:
+          fontSize = 40;
+          break;
+        default:
+          fontSize = 44;
+      }
+
+      return {
+        fontSize: fontSize + 'px'
+      };
+    },
     cultureFontStyle: function() {
       return kiosk.app.changeFontFamily(this.culture);
     }
